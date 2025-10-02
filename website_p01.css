@@ -1,0 +1,20 @@
+.wrapper{
+    min-height: 100vh;
+}
+
+#banner{
+    background-image: linear-gradient(white, orange), url(./images/assets/bg-banner.jpg);
+    background-size: cover;
+    background-position: 0 80%;
+    background-blend-mode: hard-light;
+}
+.scrollwrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+}
+
+.product-row {
+  display: flex;
+  flex-wrap: nowrap;
+}
