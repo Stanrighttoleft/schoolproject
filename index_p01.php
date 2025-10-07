@@ -8,10 +8,35 @@
     <link rel="stylesheet" href="./website_p01.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
   </head>
-  <body>
+  <body class="position-relative">
+    <div class="position-fixed carticon rounded-circle bg-white shadow" style="top:20%; right:20%; width:100px; height:100px; z-index:5;" >
+      <img src="./images/assets/carticon.png" style="width: 100%; height:auto;" alt="">
+    </div>
+    <!-- Floating chat/contact box -->
+    <div class="floating-box">
+      <div class="chat-toggle" id="chatToggle">
+        <i class="fa-solid fa-comments me-1"></i><span style="font-size: 1em;">聯絡我們</span>
+      </div>
+      <div class="chat-panel shadow-lg" id="chatPanel">
+        <h5 class="mb-3 text-center">聯絡我們</h5>
+        <div class="d-flex flex-column align-items-center">
+          <a href="https://line.me/ti/p/xxxx" target="_blank" class="btn btn-success mb-2 w-75">
+            <i class="fa-brands fa-line me-2"></i> LINE
+          </a>
+          <a href="https://facebook.com/xxxx" target="_blank" class="btn btn-primary mb-2 w-75">
+            <i class="fa-brands fa-facebook me-2"></i> Facebook
+          </a>
+          <a href="mailto:info@yourmail.com" class="btn btn-warning text-dark w-75">
+            <i class="fa-solid fa-envelope me-2"></i> Email
+          </a>
+        </div>
+      </div>
+    </div>
+    
+
     <div class="wrapper container-fluid">
       <section id="header" style="position: sticky;top:0; z-index:3;" >
-        <div class="top d-flex bg-success"> 
+        <div class="top d-flex bg-warning"> 
           <div class="topleft ms-auto w-60 d-flex justify-content-end" style="width: 50%;">
             <img src="./images/assets/facebook.png" class="mx-3" alt="" style="height: 30px;"> 粉絲團 
             <img src="images/assets/like.png" alt="" style="height: 30px;" class="mx-3">
@@ -85,11 +110,13 @@
       </section>
       <section id="productview" class="p-5 pt-1">
         <div class="w-100 d-flex justify-content-center mb-3" style="font-size: 20px;">優惠商品</div>
-        <div class="scrollwrapper ">
-          <div class="product-row overflow-hidden d-flex flex-nowrap position-relative">
-            <!-- navigation -->
-             <i class="fa-solid fa-chevron-left position-absolute" style="color:#ffd43b; font-size:100px; top:30%; z-index:2;" alt=""></i>
-             <i class="fa-solid fa-chevron-right position-absolute" style="color:#ffd43b; font-size:100px; top:30%; right:0%; z-index:2;" alt=""></i>
+        <div class="scrollwrapper position-relative">
+
+        <!-- navigation -->
+             <i class="fa-solid fa-chevron-left position-absolute" style="color:#ffd43b; font-size:100px; top:30%; z-index:2; cursor:pointer;" alt=""></i>
+             <i class="fa-solid fa-chevron-right position-absolute" style="color:#ffd43b; font-size:100px; top:30%; right:0%; z-index:2; cursor:pointer;" alt=""></i>
+          <div class="product-row overflow-hidden d-flex flex-nowrap">
+            
             <!-- product cards -->
             <div class="card p-1 m-2 mx-5 flex-shrink-0" style="width: 18rem;">
               <div class="text-center">
@@ -100,7 +127,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -114,7 +141,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5 ">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1 ">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -128,7 +155,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -142,7 +169,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -156,7 +183,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -170,7 +197,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -184,7 +211,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -198,7 +225,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -212,7 +239,7 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-5">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
@@ -255,7 +282,7 @@
           </div>
           <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi earum inventore sit repudiandae placeat amet esse, impedit autem ratione deserunt maiores eius officiis at sunt eveniet sequi. Ducimus, beatae laboriosam?</p>
-            <button class="btn btn-warning">關於我們</button>
+            <button class="btn btn-warning shadow">關於我們</button>
           </div>
         </div>
       </section>
@@ -265,13 +292,80 @@
         </div>
         
       </section>
-      <section id="footer">
+      <section id="footer" >
+        <div class="row bg-success position-relative text-white footertop" style="height:400px;">
+        
+          <div class="col-md-4">
+
+            <img src="./images/qrcode.jpg" style="width: 200px;" class="mt-5 mb-5" alt="">
+            <br>
+             掃我到客服
+
+          </div>
+          <div class="col-md-4">
+            <img src="./images/assets/logov122.png" class="mt-5" style="width: 300px;" alt="">
+          </div>
+          <div class="col-md-4 mt-5 text-decoration-underline">
+            公司名稱：澳打國際
+            <br>
+            公司電話：
+            <br>
+            公司住址：
+            <br>
+            copyright：all right reserved
+          </div>
+        </div>
+
         
       </section>
       
     </div>
     
-  </body>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <!-- jquery version of scroll item list -->
+  <!-- <script>
+$(document).ready(function() {
+  const $row = $(".product-row");
+  const scrollAmount = 400; // Adjust this to how far each click scrolls
+
+  $(".fa-chevron-left").on("click", function() {
+    $row.animate({
+      scrollLeft: $row.scrollLeft() - scrollAmount
+    }, 400); // 400ms smooth scroll
+  });
+
+  $(".fa-chevron-right").on("click", function() {
+    $row.animate({
+      scrollLeft: $row.scrollLeft() + scrollAmount
+    }, 400);
+  });
+});
+</script> -->
+<script>
+
+  //product view
+document.addEventListener("DOMContentLoaded", () => {
+  const row = document.querySelector(".product-row");
+  const scrollAmount = 400;
+
+  document.querySelector(".fa-chevron-left").addEventListener("click", () => {
+    row.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  });
+
+  document.querySelector(".fa-chevron-right").addEventListener("click", () => {
+    row.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  });
+});
+// chating box
+document.getElementById("chatToggle").addEventListener("click", function() {
+  const panel = document.getElementById("chatPanel");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+});
+</script>
+
+
+</body>
 </html>
