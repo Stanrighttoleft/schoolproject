@@ -7,6 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="./website_p01.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
+    <!-- AOS plugin -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
   </head>
   <body class="position-relative">
     <div class="position-fixed carticon rounded-circle bg-white shadow" style="top:20%; right:20%; width:100px; height:100px; z-index:5;" >
@@ -101,14 +105,48 @@
           </div>
         </nav>      
       </section>
-      <section id="banner" class="position-relative overflow-hidden"  style="width: 100%; height: 600px;">
-        <img src="./images/assets/rabbit.png" alt="" class="position-absolute" style="top:30%; left:45%; z-index:2">
-        <img src="./images/assets/fun.png" alt="" class="position-absolute" style="left:50%; top:20%;">
-        <img src="./images/assets/grass1.png" alt="" class="position-absolute" style="bottom:0%;  ">
-        <img src="./images/assets/grass1.png" alt="" class="position-absolute" style="bottom:0%; left:50%  ">
+      <section id="banner"   style="width: 100%; height: 600px;">
+<!--  carousel -->
+        <div id="carouselBanner" class="carousel slide h-100 carousel-fade" data-bs-ride="carousel">
+          <div class="carousel-inner h-100">
+            <div class="carousel-item active position-relative h-100">
+              <img src="./images/assets/rabbit.png" class="position-absolute" style="top:30%; left:45%; z-index:2">
+              <img src="./images/assets/fun.png" class="position-absolute" style="left:50%; top:20%;">
+              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%;">
+              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%; left:50%">
+            </div>
+
+            <div class="carousel-item position-relative h-100">
+              <!-- Another slide (e.g., a different background or image set) -->
+              <img src="./images/assets/rabbit.png" class="position-absolute" style="top:40%; left:45%; z-index:2">
+              <img src="./images/assets/fun.png" class="position-absolute" style="left:40%; top:20%;">
+              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%;">
+              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%; left:50%">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>       
+
+
+
+
+<!-- carousel -->
+        <!-- <div class="position-relative overflow-hidden">
+          <img src="./images/assets/rabbit.png" alt="" class="position-absolute" style="top:30%; left:45%; z-index:2">
+          <img src="./images/assets/fun.png" alt="" class="position-absolute" style="left:50%; top:20%;">
+          <img src="./images/assets/grass1.png" alt="" class="position-absolute" style="bottom:0%;  ">
+          <img src="./images/assets/grass1.png" alt="" class="position-absolute" style="bottom:0%; left:50%  ">
+        </div> -->
        
       </section>
-      <section id="productview" class="p-5 pt-1">
+      <section id="productview" class="p-5 pt-1" data-aos="zoom-in-up">
         <div class="w-100 d-flex justify-content-center mb-3" style="font-size: 20px;">優惠商品</div>
         <div class="scrollwrapper position-relative">
 
@@ -127,11 +165,12 @@
                 <h5 class="card-title">澳洲益生菌B420-60顆入</h5>
                 <p class="card-text">早買早好多吃多健康</p>
                 <p class="card-text">NT:800</p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-1">放入購物車</button>
+                <div class="d-flex "><button href="#" class="btn btn-primary me-1 ">放入購物車</button>
                 <button href="#" class="btn btn-success">直接購買</button>
               </div>
               </div>
-            </div>            
+            </div>      
+             
             <div class="card p-1 m-2 mx-5 flex-shrink-0" style="width: 18rem;">
               <div class="text-center">
                 <img src="./images/products/small/m1.png" class="card-img-top" alt="..."
@@ -287,8 +326,9 @@
         </div>
       </section>
       <section id="procedure">
-        <div>
+        <div class="position-relative">
           <img src="./images/assets/orderprocess.png" class="img-fluid" style="width: 100%;" alt="">
+          <button class="position-absolute btn btn-warning  shadow fw-bolder" style="z-index:5; width:150px;height:50px; left:50%; bottom:20%; font-size:1.2em ">點我了解</button>
         </div>
         
       </section>
@@ -320,10 +360,14 @@
       </section>
       
     </div>
+
     
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>
+      AOS.init();
+  </script>
 
   <!-- jquery version of scroll item list -->
   <!-- <script>
