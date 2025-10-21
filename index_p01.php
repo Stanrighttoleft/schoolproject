@@ -1,3 +1,10 @@
+<!-- if session not start then start it -->
+<?php (!isset($_SESSION))? session_start(): ""; ?>
+<!-- import the database -->
+ <?php require_once('Connections/conn_db.php');?>
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -40,6 +47,47 @@
 
     <div class="wrapper container-fluid">
       <section id="header" style="position: sticky;top:0; z-index:3;" >
+
+      <!-- php function for the navbar -->
+      <?php
+      function multiList01(){
+        global $link;
+        //列出產品類別第一層
+        $SQLstring="SELECT * FROM pyclass WHERE level=1 ORDER BY sort";
+        $pyclass01=$link->query($SQLstring);
+
+      ?>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
+          商品資訊
+        </a>
+        <ul class="dropdown-menu">
+          <?php while ($pyclass01_Rows= $pyclass01->fetch()){ ?>
+          <li class="nav-item dropend">
+            <a class="dropdown-item dropdown-toggle" href="#">
+              <?php echo $pyclass01_Rows['cname']; ?>
+            </a>
+              <ul class="dropdown-menu">
+                <li>
+                <a href="" class="dropdown-item">
+                  Item-1
+                </a></li>
+                <li>
+                <a href="" class="dropdown-item">Item-2</a></li>
+                <li>
+                <a href="" class="dropdown-item">Item-3</a></li>
+              </ul>
+          </li>
+          <?php }?>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </li>
+      <?php } ?>
+
+
+
         <div class="top d-flex bg-warning"> 
           <div class="topleft ms-auto w-60 d-flex justify-content-end" style="width: 50%;">
             <img src="./images/assets/facebook.png" class="mx-3" alt="" style="height: 30px;"> 粉絲團 
@@ -84,6 +132,10 @@
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                   </ul>
                 </li>
+
+                <!-- The dropdown component I am going to use -->
+                <?php multiList01(); ?>
+
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
                     澳洲直購
