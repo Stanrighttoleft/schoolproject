@@ -2,9 +2,8 @@
 <?php (!isset($_SESSION))? session_start(): ""; ?>
 <!-- import the database -->
  <?php require_once('Connections/conn_db.php');?>
-
-
-
+  <!-- import common PHP function -->
+<?php require_once("php_lib.php"); ?>
 
 <!doctype html>
 <html lang="en">
@@ -47,7 +46,7 @@
     
 
     <div class="wrapper container-fluid">
-      <section id="header" style="position: sticky;top:0; z-index:3;" >
+    <section id="header" style="position: sticky;top:0; z-index:3;" >
 
       <!-- php function multiList01 for the navbar -->
         <?php
@@ -59,12 +58,10 @@
 
           ?>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="./products_p01.php" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
                 商品資訊
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="./products_p01.php">所有商品</a></li>
-                <li><hr class="dropdown-divider"></li>
                 <?php while ($pyclass01_Rows= $pyclass01->fetch()){ ?>
                 <li class="nav-item dropend">
                   <a class="dropdown-item dropdown-toggle" href="#">
@@ -111,7 +108,7 @@
           
           
           <div class="container-fluid ms-auto">
-            <a class="navbar-brand" href="#"><img src="./images/assets/logov122.png" style="width: 80px;" alt=""></a>
+            <a class="navbar-brand" href="./index_p01.php"><img src="./images/assets/logov122.png" style="width: 80px;" alt=""></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -158,133 +155,135 @@
             </div>
           </div>
         </nav>      
-      </section>
-    <section id="banner"   style="width: 100%; height: 600px;">
-      <!--  carousel -->
-        <div id="carouselBanner" class="carousel slide h-100 carousel-fade" data-bs-ride="carousel">
-          <div class="carousel-inner h-100">
-            <div class="carousel-item active position-relative h-100">
-              <img src="./images/assets/rabbit.png" class="position-absolute" style="top:30%; left:45%; z-index:2">
-              <img src="./images/assets/fun.png" class="position-absolute" style="left:50%; top:20%;">
-              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%;">
-              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%; left:50%">
+    </section>
+    <section id="productcontent">
+            <div class="container-fluid">
+                <div class="row align-items-start g-0 d-flex flex-row">
+                    <div class="col-md-4" style="height: 200vh;">
+                        <!-- Accordion item  -->
+                        <?php
+                        //列出產品第一層,取得資料庫資料並存在pyclass01
+                        $SQLstring="SELECT * FROM pyclass WHERE level=1 ORDER BY sort";
+                        $pyclass01=$link->query($SQLstring);
+                        $i=1;//控制編號順序
+                        ?>
+                        <div class="accordion mt-3" id="accordionExample">
+                            <?php 
+                            //列出第一層資訊
+                            while($pyclass01_Rows=$pyclass01->fetch()){ ?>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne<?php echo $i; ?>">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne<?php echo $i; ?>" aria-expanded="true" aria-controls="collapseOne<?php echo $i; ?>">
+                                    <i class="fas <?php echo $pyclass01_Rows['fonticon']; ?>fa-lg fa-fw"></i><?php echo $pyclass01_Rows['cname'];?>
+                                </button>
+                                </h2>
+                                <?php
+                                //列出資料類別對應的第二層資料
+                                $SQLstring=sprintf("SELECT * FROM pyclass WHERE level=2 AND uplink=%d ORDER BY sort", $pyclass01_Rows['classid']);
+                                $pyclass02=$link->query($SQLstring);
+                                ?>
+                                <div id="collapseOne<?php echo $i; ?>" class="accordion-collapse collapse <?php echo($i==1)?'show':''; ?>" aria-labelledby="headingOne<?php echo $i; ?>" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <table class="table">
+                                        <tbody>
+                                        <?php while($pyclass02_Rows=$pyclass02->fetch()){ ?>
+                                            <tr>
+                                                <td>
+                                                    <a href="" class="text-decoration-none text-black"><em class="fas <?php echo $pyclass02_Rows['fonticon']; ?> fa-fw"></em><?php echo $pyclass02_Rows['cname']; ?></a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                            <?php $i++; }?>
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="height: 200vh;">
+                        <!-- Product sortbar -->
+                        <select class="form-select m-3" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <!-- Product main content -->
+                         <?php
+                         //get product information from database
+                         $maxRows_rs=12; //maxpage
+                         $pageNum_rs=0; //start page
+                         if(isset($_GET['pageNum_rs'])){
+                            $pageNum_rs=$_GET['pageNum_rs'];
+                         }
+                         $startRow_rs=$pageNum_rs*$maxRows_rs;
+                         //列出產品product資料查詢
+                         $queryFirst=sprintf("SELECT * FROM product, product_img WHERE p_open=1 AND product_img.sort=1 AND product.p_id=product_img.p_id ORDER BY product.p_id DESC", $maxRows_rs);
+                         $query=sprintf("%s LIMIT %d, %d", $queryFirst, $startRow_rs, $maxRows_rs);
+                         $pList01=$link->query($query);
+                         $i=1; //控制每row產生
+
+                         
+
+                         ?>
+                         <!-- control the card to make product list -->
+                        <!-- <div class="row ms-3"> -->
+                        <?php while($pList01_Rows=$pList01->fetch()) { ?>
+                            <?php if($i%3==1){ ?><div class="row text-center ms-3"><?php } ?>
+                            <div class="card col-md-4">
+                                <img src="./images/products/big/<?php echo $pList01_Rows['img_file']; ?>" class="card-img-top" alt="<?php echo $pList01_Rows['p_name']; ?>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $pList01_Rows['p_name']; ?></h5>
+                                    <p class="card-text"><?php echo mb_substr($pList01_Rows['p_intro'],0,30,"utf-8"); ?></p>
+                                    <p>NT<?php echo $pList01_Rows['p_price']; ?></p>
+                                    <a href="#" class="btn btn-primary">更多資訊</a>
+                                    <a href="#" class="btn btn-primary">放購物車</a>
+                                </div>
+                            </div>
+                        <?php if($i %3==0 || $i==$pList01->rowCount()){?></div><?php } ?>
+                        <?php $i++; ?>
+                        <?php } ?> 
+                        <!--This place reserve for  pagination  -->
+                        <div class="mt-5" style="text-align: center;">
+                            <?php //取得目前頁數
+                            if(isset($_GET['totalRows_rs'])){
+                                $totalRows_rs=$_GET['totalRows_rs'];
+                            }else{
+                                $all_rs=$link->query($queryFirst);
+                                $totalRows_rs=$all_rs->rowCount();
+                            }
+                            $totalPages_rs=ceil($totalRows_rs/$maxRows_rs)-1;
+                            //呼叫分頁功能函數
+                            $prev_rs="&laquo";
+                            $next_rs="&raquo";
+                            $separator="|";
+                            $max_links=20;
+                            $pages_rs=buildNavigation($pageNum_rs,$totalPages_rs,$prev_rs,$next_rs,$separator,$max_links,true,3,"rs");
+                            ?>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <?php echo $pages_rs[0].$pages_rs[1].$pages_rs[2]; ?>
+                                </ul>
+                            </nav>
+                            test where it is
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="carousel-item position-relative h-100">
-              <!-- Another slide (e.g., a different background or image set) -->
-              <img src="./images/assets/rabbit.png" class="position-absolute" style="top:40%; left:45%; z-index:2">
-              <img src="./images/assets/fun.png" class="position-absolute" style="left:40%; top:20%;">
-              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%;">
-              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%; left:50%">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>       
-
-
-
-
-        <!-- carousel -->
-        <!-- <div class="position-relative overflow-hidden">
-          <img src="./images/assets/rabbit.png" alt="" class="position-absolute" style="top:30%; left:45%; z-index:2">
-          <img src="./images/assets/fun.png" alt="" class="position-absolute" style="left:50%; top:20%;">
-          <img src="./images/assets/grass1.png" alt="" class="position-absolute" style="bottom:0%;  ">
-          <img src="./images/assets/grass1.png" alt="" class="position-absolute" style="bottom:0%; left:50%  ">
-        </div> -->
-       
     </section>
     <section id="productview" class="p-5 pt-1" data-aos="zoom-in-up">
-        <div class="w-100 d-flex justify-content-center mb-3" style="font-size: 20px;">優惠商品</div>
-        <div class="scrollwrapper position-relative">
-
-        <!-- navigation -->
-             <i class="fa-solid fa-chevron-left position-absolute" style="color:#ffd43b; font-size:100px; top:30%; z-index:2; cursor:pointer;" alt=""></i>
-             <i class="fa-solid fa-chevron-right position-absolute" style="color:#ffd43b; font-size:100px; top:30%; right:0%; z-index:2; cursor:pointer;" alt=""></i>
-          <div class="product-row overflow-hidden d-flex flex-nowrap">
-            
-            <!-- product cards -->
-
-            <?php 
-            // lookup for the hot product from database
-            $SQLstring="SELECT * FROM hot,product,product_img WHERE hot.p_id=product_img.p_id AND hot.p_id=product.p_id  order by h_sort";
-            $hot=$link->query($SQLstring);
-            ?>
-            <?php while($data=$hot->fetch()){ ?>
-            <div class="card p-1 m-2 mx-5 flex-shrink-0" style="width: 18rem;">
-              <div class="text-center">
-                <img src="./images/products/big/<?php echo $data['img_file']; ?>" class="card-img-top" alt="..."
-                style="width: 150px;">
-              </div>
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $data['p_name'] ?></h5>
-                <p class="card-text">
-                <?php 
-                $intro = strip_tags($data['p_intro']); // remove HTML
-                $preview = mb_substr($intro, 0, 50, "UTF-8"); // get first 50 characters
-                echo $preview . (mb_strlen($intro, "UTF-8") > 50 ? '...' : '');
-                ?>
-                </p>
-                <p class="card-text"><?php echo $data['p_price'] ?></p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-1 ">放入購物車</button>
-                <button href="#" class="btn btn-success">更多資訊</button>
-              </div>
-              </div>
-            </div>
-            <?php } ?>      
-          </div>
-        </div>
-        <div class="w-100 d-flex justify-content-center mt-3" style="font-size: 20px;">瞭解更多</div>
+        
     </section>
     <section id="news">
-       <div class="row">
-        <div class="col-md-10">
-          <div class="row">
-            <div class="col-md-12 d-flex justify-content-center" style="font-size: 20px; font-weight:800">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;澳洲時事
-            </div>
-            <div class="col-md-12 d-flex">
-              <div class="col-md-2" style="font-size: 16px;  border-bottom: dotted 1px black;">BBC</div>
-              <div class="col-md-7" style="font-size: 16px;  border-bottom: dotted 1px black; ">澳洲總理脫光光遊街</div>
-              <div class="col-md-3" style="font-size: 16px;  border-bottom: dotted 1px black; ">日期：04/12/2025</div>
-            </div>
-            <div class="col-md-12 d-flex">
-              <div class="col-md-2" style="font-size: 16px;  border-bottom: dotted 1px black;">ABC</div>
-              <div class="col-md-7" style="font-size: 16px;  border-bottom: dotted 1px black;">移民改革2025重磅消息</div>
-              <div class="col-md-3" style="font-size: 16px;  border-bottom: dotted 1px black;">日期：05/12/2025</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <img src="./images/assets/pen.gif" class="img-fluid" alt="" style="max-width:100%; height:auto;">
-        </div>
-       </div> 
+       
       </section>
       <section id="aboutus" class="bg-warning">
-        <div class="row">
-          <div class="col-md-4">
-            <img src="./images/assets/shipment1.png" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-4">
-            <img src="./images/assets/aboutus.svg" class="img-fluid" alt="" style="height:600px;">
-          </div>
-          <div class="col-md-4 d-flex flex-column justify-content-center align-items-center">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi earum inventore sit repudiandae placeat amet esse, impedit autem ratione deserunt maiores eius officiis at sunt eveniet sequi. Ducimus, beatae laboriosam?</p>
-            <button class="btn btn-warning shadow">關於我們</button>
-          </div>
-        </div>
+        
       </section>
       <section id="procedure">
-        <div class="position-relative">
-          <img src="./images/assets/orderprocess.png" class="img-fluid" style="width: 100%;" alt="">
-          <button class="position-absolute btn btn-warning  shadow fw-bolder" style="z-index:5; width:150px;height:50px; left:50%; bottom:20%; font-size:1.2em ">點我了解</button>
-        </div>
+        
         
       </section>
       <section id="footer" >
@@ -295,7 +294,6 @@
             <img src="./images/qrcode.jpg" style="width: 200px;" class="mt-5 mb-5" alt="">
             <br>
              掃我到客服
-
           </div>
           <div class="col-md-4">
             <img src="./images/assets/logov122.png" class="mt-5" style="width: 300px;" alt="">
@@ -345,19 +343,6 @@ $(document).ready(function() {
 </script> -->
 <script>
 
-  //product view
-document.addEventListener("DOMContentLoaded", () => {
-  const row = document.querySelector(".product-row");
-  const scrollAmount = 400;
-
-  document.querySelector(".fa-chevron-left").addEventListener("click", () => {
-    row.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-  });
-
-  document.querySelector(".fa-chevron-right").addEventListener("click", () => {
-    row.scrollBy({ left: scrollAmount, behavior: "smooth" });
-  });
-});
 // chating box
 document.getElementById("chatToggle").addEventListener("click", function() {
   const panel = document.getElementById("chatPanel");
