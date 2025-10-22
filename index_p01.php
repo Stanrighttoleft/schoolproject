@@ -20,7 +20,7 @@
     
   </head>
   <body class="position-relative">
-    <div class="position-fixed carticon rounded-circle bg-white shadow" style="top:20%; right:20%; width:100px; height:100px; z-index:5;" >
+    <div class="position-fixed carticon rounded-circle bg-white shadow" style="top:30%; right:20%; width:100px; height:100px; z-index:5;" >
       <img src="./images/assets/carticon.png" style="width: 100%; height:auto;" alt="">
     </div>
     <!-- Floating chat/contact box -->
@@ -48,43 +48,42 @@
     <div class="wrapper container-fluid">
       <section id="header" style="position: sticky;top:0; z-index:3;" >
 
-      <!-- php function for the navbar -->
-      <?php
-      function multiList01(){
-        global $link;
-        //列出產品類別第一層
-        $SQLstring="SELECT * FROM pyclass WHERE level=1 ORDER BY sort";
-        $pyclass01=$link->query($SQLstring);
+      <!-- php function multiList01 for the navbar -->
+        <?php
+          function multiList01(){
+            global $link;
+            //列出產品類別第一層
+            $SQLstring="SELECT * FROM pyclass WHERE level=1 ORDER BY sort";
+            $pyclass01=$link->query($SQLstring);
 
-      ?>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
-          商品資訊
-        </a>
-        <ul class="dropdown-menu">
-          <?php while ($pyclass01_Rows= $pyclass01->fetch()){ ?>
-          <li class="nav-item dropend">
-            <a class="dropdown-item dropdown-toggle" href="#">
-              <?php echo $pyclass01_Rows['cname']; ?>
-            </a>
+          ?>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
+                商品資訊
+              </a>
               <ul class="dropdown-menu">
-                <li>
-                <a href="" class="dropdown-item">
-                  Item-1
-                </a></li>
-                <li>
-                <a href="" class="dropdown-item">Item-2</a></li>
-                <li>
-                <a href="" class="dropdown-item">Item-3</a></li>
-              </ul>
+                <?php while ($pyclass01_Rows= $pyclass01->fetch()){ ?>
+                <li class="nav-item dropend">
+                  <a class="dropdown-item dropdown-toggle" href="#">
+                    <?php echo $pyclass01_Rows['cname']; ?>
+                  </a>
+                  <?php
+                  //list the second layer of the product according to the class
+                  $SQLstring=sprintf("SELECT * FROM pyclass WHERE level=2 AND uplink=%d ORDER BY sort",$pyclass01_Rows['classid']);
+                  $pyclass02=$link->query($SQLstring);
+                  ?>
+                    <ul class="dropdown-menu">
+                      <?php while($pyclass02_Rows=$pyclass02->fetch()){ ?>
+                        <li><a href="#" class="dropdown-item"><em class="fas <?php echo $pyclass02_Rows['fonticon']; ?> fa-fw"></em><?php echo $pyclass02_Rows['cname']; ?></a></li>
+                      <?php } ?>
+                    </ul>
+                </li>
+              <?php }?>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">優惠商品</a></li>
+            </ul>
           </li>
-          <?php }?>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
-      </li>
-      <?php } ?>
+        <?php } ?>
 
 
 
@@ -157,8 +156,8 @@
           </div>
         </nav>      
       </section>
-      <section id="banner"   style="width: 100%; height: 600px;">
-<!--  carousel -->
+    <section id="banner"   style="width: 100%; height: 600px;">
+      <!--  carousel -->
         <div id="carouselBanner" class="carousel slide h-100 carousel-fade" data-bs-ride="carousel">
           <div class="carousel-inner h-100">
             <div class="carousel-item active position-relative h-100">
@@ -189,7 +188,7 @@
 
 
 
-<!-- carousel -->
+        <!-- carousel -->
         <!-- <div class="position-relative overflow-hidden">
           <img src="./images/assets/rabbit.png" alt="" class="position-absolute" style="top:30%; left:45%; z-index:2">
           <img src="./images/assets/fun.png" alt="" class="position-absolute" style="left:50%; top:20%;">
@@ -197,8 +196,8 @@
           <img src="./images/assets/grass1.png" alt="" class="position-absolute" style="bottom:0%; left:50%  ">
         </div> -->
        
-      </section>
-      <section id="productview" class="p-5 pt-1" data-aos="zoom-in-up">
+    </section>
+    <section id="productview" class="p-5 pt-1" data-aos="zoom-in-up">
         <div class="w-100 d-flex justify-content-center mb-3" style="font-size: 20px;">優惠商品</div>
         <div class="scrollwrapper position-relative">
 
@@ -208,6 +207,12 @@
           <div class="product-row overflow-hidden d-flex flex-nowrap">
             
             <!-- product cards -->
+
+            <?php 
+            // lookup for the hot product from database
+            $SQLstring="SELECT * FROM hot,product,product_img WHERE hot.p_id=product_img.p_id AND hot.p_id=product.p_id AND product_img.sort=1 order by h_sort";
+            $hot=$link->query($SQLstring);
+            ?>
             <div class="card p-1 m-2 mx-5 flex-shrink-0" style="width: 18rem;">
               <div class="text-center">
                 <img src="./images/products/small/m1.png" class="card-img-top" alt="..."
@@ -338,8 +343,8 @@
           </div>
         </div>
         <div class="w-100 d-flex justify-content-center mt-3" style="font-size: 20px;">瞭解更多</div>
-      </section>
-      <section id="news">
+    </section>
+    <section id="news">
        <div class="row">
         <div class="col-md-10">
           <div class="row">
