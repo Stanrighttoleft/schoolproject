@@ -48,8 +48,8 @@
 
     <div class="wrapper container-fluid">
       <section id="header" style="position: sticky;top:0; z-index:3;" >
-        <!--import Navbar -->
-        <?php require_once("navbar.php"); ?>
+
+      <?php require_once("./navbar.php"); ?>
       </section>
     <section id="banner"   style="width: 100%; height: 600px;">
       <!--  carousel -->
