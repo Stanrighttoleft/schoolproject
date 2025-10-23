@@ -47,192 +47,60 @@
 
     <div class="wrapper container-fluid">
     <section id="header" style="position: sticky;top:0; z-index:3;" >
-
-      <!-- php function multiList01 for the navbar -->
-        <?php
-          function multiList01(){
-            global $link;
-            //列出產品類別第一層
-            $SQLstring="SELECT * FROM pyclass WHERE level=1 ORDER BY sort";
-            $pyclass01=$link->query($SQLstring);
-
-          ?>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
-                商品資訊
-              </a>
-              <ul class="dropdown-menu">
-                <?php while ($pyclass01_Rows= $pyclass01->fetch()){ ?>
-                <li class="nav-item dropend">
-                  <a class="dropdown-item dropdown-toggle" href="#">
-                    <?php echo $pyclass01_Rows['cname']; ?>
-                  </a>
-                  <?php
-                  //list the second layer of the product according to the class
-                  $SQLstring=sprintf("SELECT * FROM pyclass WHERE level=2 AND uplink=%d ORDER BY sort",$pyclass01_Rows['classid']);
-                  $pyclass02=$link->query($SQLstring);
-                  ?>
-                    <ul class="dropdown-menu">
-                      <?php while($pyclass02_Rows=$pyclass02->fetch()){ ?>
-                        <li><a href="#" class="dropdown-item"><em class="fas <?php echo $pyclass02_Rows['fonticon']; ?> fa-fw"></em><?php echo $pyclass02_Rows['cname']; ?></a></li>
-                      <?php } ?>
-                    </ul>
-                </li>
-              <?php }?>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">優惠商品</a></li>
-            </ul>
-          </li>
-        <?php } ?>
-
-
-
-        <div class="top d-flex bg-warning"> 
-          <div class="topleft ms-auto w-60 d-flex justify-content-end" style="width: 50%;">
-            <img src="./images/assets/facebook.png" class="mx-3" alt="" style="height: 30px;"> 粉絲團 
-            <img src="images/assets/like.png" alt="" style="height: 30px;" class="mx-3">
-          </div> 
-        
-          <div class="topright  d-flex justify-content-end w-40" style="width:50%;">
-            <img src="" alt="">
-
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <i class="fa-solid fa-magnifying-glass mx-3 " style="font-size: 30px;"></i>
-                <i class="fa-solid fa-user ms-3" style="font-size: 30px;"></i>
-                <i class="fa-solid fa-cart-shopping mx-3" style="font-size: 30px;"></i>
-                
-          </div></div>
-  
-        <nav class="navbar navbar-expand-lg bg-warning sticky-top" >
-          
-          
-          <div class="container-fluid ms-auto">
-            <a class="navbar-brand" href="./index_p01.php"><img src="./images/assets/logov122.png" style="width: 80px;" alt=""></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#" style="font-size: 20px; font-weight:600;">瞭解澳洲</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#" style="font-size: 20px; font-weight:600;">澳洲時事</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
-                    澳洲代購
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </li>
-
-                <!-- The dropdown component I am going to use -->
-                <?php multiList01(); ?>
-
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
-                    澳洲直購
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link " style="font-size: 20px; font-weight:600;">關於我們</a>
-                </li>
-              </ul>
-              
-              </form>
-            </div>
-          </div>
-        </nav>      
+      <?php require_once("navbar.php") ?>
     </section>
     <section id="productcontent">
-            <div class="container-fluid">
-                <div class="row align-items-start g-0 d-flex flex-row">
-                    <div class="col-md-4" style="height: 200vh;">
-                        <!-- Accordion item  -->
-                        <?php
-                        //列出產品第一層,取得資料庫資料並存在pyclass01
-                        $SQLstring="SELECT * FROM pyclass WHERE level=1 ORDER BY sort";
-                        $pyclass01=$link->query($SQLstring);
-                        $i=1;//控制編號順序
+        <div class="container-fluid">
+            <div class="row align-items-start g-0 d-flex flex-row">
+                <div class="col-md-4" style="height: 200vh;">
+                    <!-- sidebar -->
+                    <?php require_once("./sidebar.php") ?>
+                </div>
+                <div class="col-md-8" style="height: 200vh;">
+                    <!-- Product sortbar -->
+                    <select class="form-select m-3" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                    <!-- Product main content -->
+
+                    <!-- the product card -->
+                    <?php
+                        //get product information from database
+                        $maxRows_rs=12; //maxpage
+                        $pageNum_rs=0; //start page
+                        if(isset($_GET['pageNum_rs'])){
+                        $pageNum_rs=$_GET['pageNum_rs'];
+                        }
+                        $startRow_rs=$pageNum_rs*$maxRows_rs;
+
+                        // 產品類別查詢
+                        if(isset($_GET['classid'])){
+                            //使用產品類別查詢
+                            $queryFirst=sprintf("SELECT * FROM product, product_img WHERE p_open=1 AND product_img.sort=1 AND product.p_id=product_img.p_id AND product.classid='%d' ORDER BY product.p_id DESC", $_GET['classid']);
+                        }else{
+                            //列出產品product資料查詢
+                            $queryFirst=sprintf("SELECT * FROM product, product_img WHERE p_open=1 AND product_img.sort=1 AND product.p_id=product_img.p_id ORDER BY product.p_id DESC", $maxRows_rs);
+                        }
+
+                        //列出產品product資料查詢
+                        $query=sprintf("%s LIMIT %d, %d", $queryFirst, $startRow_rs, $maxRows_rs);
+                        $pList01=$link->query($query);
+                        $i=1; //控制每row產生
                         ?>
-                        <div class="accordion mt-3" id="accordionExample">
-                            <?php 
-                            //列出第一層資訊
-                            while($pyclass01_Rows=$pyclass01->fetch()){ ?>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne<?php echo $i; ?>">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne<?php echo $i; ?>" aria-expanded="true" aria-controls="collapseOne<?php echo $i; ?>">
-                                    <i class="fas <?php echo $pyclass01_Rows['fonticon']; ?>fa-lg fa-fw"></i><?php echo $pyclass01_Rows['cname'];?>
-                                </button>
-                                </h2>
-                                <?php
-                                //列出資料類別對應的第二層資料
-                                $SQLstring=sprintf("SELECT * FROM pyclass WHERE level=2 AND uplink=%d ORDER BY sort", $pyclass01_Rows['classid']);
-                                $pyclass02=$link->query($SQLstring);
-                                ?>
-                                <div id="collapseOne<?php echo $i; ?>" class="accordion-collapse collapse <?php echo($i==1)?'show':''; ?>" aria-labelledby="headingOne<?php echo $i; ?>" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <table class="table">
-                                        <tbody>
-                                        <?php while($pyclass02_Rows=$pyclass02->fetch()){ ?>
-                                            <tr>
-                                                <td>
-                                                    <a href="" class="text-decoration-none text-black"><em class="fas <?php echo $pyclass02_Rows['fonticon']; ?> fa-fw"></em><?php echo $pyclass02_Rows['cname']; ?></a>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                        </tbody>
 
-                                    </table>
-                                </div>
-                                </div>
-                            </div>
-                            <?php $i++; }?>
-                        </div>
-                    </div>
-                    <div class="col-md-8" style="height: 200vh;">
-                        <!-- Product sortbar -->
-                        <select class="form-select m-3" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <!-- Product main content -->
-                         <?php
-                         //get product information from database
-                         $maxRows_rs=12; //maxpage
-                         $pageNum_rs=0; //start page
-                         if(isset($_GET['pageNum_rs'])){
-                            $pageNum_rs=$_GET['pageNum_rs'];
-                         }
-                         $startRow_rs=$pageNum_rs*$maxRows_rs;
-                         //列出產品product資料查詢
-                         $queryFirst=sprintf("SELECT * FROM product, product_img WHERE p_open=1 AND product_img.sort=1 AND product.p_id=product_img.p_id ORDER BY product.p_id DESC", $maxRows_rs);
-                         $query=sprintf("%s LIMIT %d, %d", $queryFirst, $startRow_rs, $maxRows_rs);
-                         $pList01=$link->query($query);
-                         $i=1; //控制每row產生
+                        <!-- control the card to make product list -->
+                        
+                      <!-- 查詢是否有資料 -->
+                       <?php if($pList01->rowCount()!=0) { ?>
 
-                         
-
-                         ?>
-                         <!-- control the card to make product list -->
-                        <!-- <div class="row ms-3"> -->
-                        <?php while($pList01_Rows=$pList01->fetch()) { ?>
-                            <?php if($i%3==1){ ?><div class="row text-center ms-3"><?php } ?>
-                            <div class="card col-md-4">
+                      <!-- 列出資料 -->
+                      <?php while($pList01_Rows=$pList01->fetch()) { ?>
+                        <?php if($i%3==1){ ?><div class="row text-center ms-3 g-1"><?php } ?>
+                        <div class="col-md-4">
+                            <div class="card border-0" style="height: 650px;">
                                 <img src="./images/products/big/<?php echo $pList01_Rows['img_file']; ?>" class="card-img-top" alt="<?php echo $pList01_Rows['p_name']; ?>">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $pList01_Rows['p_name']; ?></h5>
@@ -242,36 +110,43 @@
                                     <a href="#" class="btn btn-primary">放購物車</a>
                                 </div>
                             </div>
+                        </div>
                         <?php if($i %3==0 || $i==$pList01->rowCount()){?></div><?php } ?>
                         <?php $i++; ?>
-                        <?php } ?> 
-                        <!--This place reserve for  pagination  -->
-                        <div class="mt-5" style="text-align: center;">
-                            <?php //取得目前頁數
-                            if(isset($_GET['totalRows_rs'])){
-                                $totalRows_rs=$_GET['totalRows_rs'];
-                            }else{
-                                $all_rs=$link->query($queryFirst);
-                                $totalRows_rs=$all_rs->rowCount();
-                            }
-                            $totalPages_rs=ceil($totalRows_rs/$maxRows_rs)-1;
-                            //呼叫分頁功能函數
-                            $prev_rs="&laquo";
-                            $next_rs="&raquo";
-                            $separator="|";
-                            $max_links=20;
-                            $pages_rs=buildNavigation($pageNum_rs,$totalPages_rs,$prev_rs,$next_rs,$separator,$max_links,true,3,"rs");
-                            ?>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <?php echo $pages_rs[0].$pages_rs[1].$pages_rs[2]; ?>
-                                </ul>
-                            </nav>
-                            test where it is
-                        </div>
+                      <?php } ?> 
+                    <!--This place reserve for  pagination  -->
+                    <div class="mt-5" style="text-align: center;">
+                    <!-- produce warming line -->
+                    <?php }else{ ?>
+                      <div class="alert alert-danger" role="alert">
+                        抱歉，小編還在搜尋中。
+                      </div>
+                    <?php } ?>
+                        <?php //取得目前頁數
+                        if(isset($_GET['totalRows_rs'])){
+                            $totalRows_rs=$_GET['totalRows_rs'];
+                        }else{
+                            $all_rs=$link->query($queryFirst);
+                            $totalRows_rs=$all_rs->rowCount();
+                        }
+                        $totalPages_rs=ceil($totalRows_rs/$maxRows_rs)-1;
+                        //呼叫分頁功能函數
+                        $prev_rs="&laquo";
+                        $next_rs="&raquo";
+                        $separator="|";
+                        $max_links=20;
+                        $pages_rs=buildNavigation($pageNum_rs,$totalPages_rs,$prev_rs,$next_rs,$separator,$max_links,true,3,"rs");
+                        ?>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <?php echo $pages_rs[0].$pages_rs[1].$pages_rs[2]; ?>
+                            </ul>
+                        </nav>
+                        test where it is
                     </div>
                 </div>
             </div>
+      </div>
     </section>
     <section id="productview" class="p-5 pt-1" data-aos="zoom-in-up">
         
