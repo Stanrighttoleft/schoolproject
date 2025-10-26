@@ -21,34 +21,12 @@
     
   </head>
   <body class="position-relative">
-    <div class="position-fixed carticon rounded-circle bg-white shadow" style="top:30%; right:20%; width:100px; height:100px; z-index:5;" >
-      <img src="./images/assets/carticon.png" style="width: 100%; height:auto;" alt="">
-    </div>
-    <!-- Floating chat/contact box -->
-    <div class="floating-box">
-      <div class="chat-toggle" id="chatToggle">
-        <i class="fa-solid fa-comments me-1"></i><span style="font-size: 1em;">聯絡我們</span>
-      </div>
-      <div class="chat-panel shadow-lg" id="chatPanel">
-        <h5 class="mb-3 text-center">聯絡我們</h5>
-        <div class="d-flex flex-column align-items-center">
-          <a href="https://line.me/ti/p/xxxx" target="_blank" class="btn btn-success mb-2 w-75">
-            <i class="fa-brands fa-line me-2"></i> LINE
-          </a>
-          <a href="https://facebook.com/xxxx" target="_blank" class="btn btn-primary mb-2 w-75">
-            <i class="fa-brands fa-facebook me-2"></i> Facebook
-          </a>
-          <a href="mailto:info@yourmail.com" class="btn btn-warning text-dark w-75">
-            <i class="fa-solid fa-envelope me-2"></i> Email
-          </a>
-        </div>
-      </div>
-    </div>
-    
+    <!-- whole page decoration absolute item -->
+     <?php require_once("./page_deco.php") ?>
 
     <div class="wrapper container-fluid">
       <section id="header" style="position: sticky;top:0; z-index:3;" >
-
+        <!-- navigation -->
       <?php require_once("./navbar.php"); ?>
       </section>
     <section id="banner"   style="width: 100%; height: 600px;">
@@ -105,14 +83,17 @@
 
             <?php 
             // lookup for the hot product from database
-            $SQLstring="SELECT * FROM hot,product,product_img WHERE hot.p_id=product_img.p_id AND hot.p_id=product.p_id  order by h_sort";
+            $SQLstring="SELECT * FROM hot,product,product_img WHERE hot.p_id=product_img.p_id AND hot.p_id=product.p_id AND product_img.sort=1  order by h_sort";
             $hot=$link->query($SQLstring);
             ?>
             <?php while($data=$hot->fetch()){ ?>
-            <div class="card p-1 m-2 mx-5 flex-shrink-0" style="width: 18rem;">
+            
+            <div class="card flex-shrink-0 p-1 m-2 mx-5" style="width: 18rem;">
               <div class="text-center">
+                <a href="./product_detail.php?p_id=<?php echo $data['p_id']; ?>" class=" text-decoration-none text-black">
                 <img src="./images/products/big/<?php echo $data['img_file']; ?>" class="card-img-top" alt="..."
                 style="width: 150px;">
+                </a>
               </div>
               <div class="card-body">
                 <h5 class="card-title"><?php echo $data['p_name'] ?></h5>
@@ -123,9 +104,10 @@
                 echo $preview . (mb_strlen($intro, "UTF-8") > 50 ? '...' : '');
                 ?>
                 </p>
-                <p class="card-text"><?php echo $data['p_price'] ?></p>
-                <div class="d-flex "><button href="#" class="btn btn-primary me-1 ">放入購物車</button>
-                <button href="#" class="btn btn-success">更多資訊</button>
+                <p class="card-text">NT: <?php echo $data['p_price'] ?></p>
+                <div class="d-flex ">
+                <button href="#" class="btn btn-primary me-1" onclick="addcart(<?php echo $data['p_id']; ?>) ">放入購物車</button>
+                <a href="./product_detail.php?p_id=<?php echo $data['p_id']; ?>" class="btn btn-success">更多資訊</a>
               </div>
               </div>
             </div>
@@ -178,33 +160,10 @@
           <button class="position-absolute btn btn-warning  shadow fw-bolder" style="z-index:5; width:150px;height:50px; left:50%; bottom:20%; font-size:1.2em ">點我了解</button>
         </div>
         
-      </section>
-      <section id="footer" >
-        <div class="row bg-success position-relative text-white footertop" style="height:400px;">
-        
-          <div class="col-md-4">
-
-            <img src="./images/qrcode.jpg" style="width: 200px;" class="mt-5 mb-5" alt="">
-            <br>
-             掃我到客服
-
-          </div>
-          <div class="col-md-4">
-            <img src="./images/assets/logov122.png" class="mt-5" style="width: 300px;" alt="">
-          </div>
-          <div class="col-md-4 mt-5 text-decoration-underline">
-            公司名稱：澳打國際
-            <br>
-            公司電話：
-            <br>
-            公司住址：
-            <br>
-            copyright：all right reserved
-          </div>
-        </div>
-
-        
-      </section>
+</section>
+<section id="footer" >
+<?php require_once('./footer.php') ?>
+</section>
       
     </div>
 
@@ -212,6 +171,7 @@
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="./js/jslib.js"></script>
   <script>
       AOS.init();
   </script>

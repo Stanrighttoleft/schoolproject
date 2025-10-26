@@ -20,43 +20,22 @@
     
   </head>
   <body class="position-relative">
-    <div class="position-fixed carticon rounded-circle bg-white shadow" style="top:30%; right:20%; width:100px; height:100px; z-index:5;" >
-      <img src="./images/assets/carticon.png" style="width: 100%; height:auto;" alt="">
-    </div>
-    <!-- Floating chat/contact box -->
-    <div class="floating-box">
-      <div class="chat-toggle" id="chatToggle">
-        <i class="fa-solid fa-comments me-1"></i><span style="font-size: 1em;">聯絡我們</span>
-      </div>
-      <div class="chat-panel shadow-lg" id="chatPanel">
-        <h5 class="mb-3 text-center">聯絡我們</h5>
-        <div class="d-flex flex-column align-items-center">
-          <a href="https://line.me/ti/p/xxxx" target="_blank" class="btn btn-success mb-2 w-75">
-            <i class="fa-brands fa-line me-2"></i> LINE
-          </a>
-          <a href="https://facebook.com/xxxx" target="_blank" class="btn btn-primary mb-2 w-75">
-            <i class="fa-brands fa-facebook me-2"></i> Facebook
-          </a>
-          <a href="mailto:info@yourmail.com" class="btn btn-warning text-dark w-75">
-            <i class="fa-solid fa-envelope me-2"></i> Email
-          </a>
-        </div>
-      </div>
-    </div>
-    
+   <!-- whole page decoration absolute item -->
+    <?php require_once('./page_deco.php') ?>
 
     <div class="wrapper container-fluid">
     <section id="header" style="position: sticky;top:0; z-index:3;" >
+      <!-- navigation -->
       <?php require_once("navbar.php") ?>
     </section>
     <section id="productcontent">
         <div class="container-fluid">
             <div class="row align-items-start g-0 d-flex flex-row">
-                <div class="col-md-4" style="height: 200vh;">
+                <div class="col-md-3" style="height: 200vh;">
                     <!-- sidebar -->
                     <?php require_once("./sidebar.php") ?>
                 </div>
-                <div class="col-md-8" style="height: 200vh;">
+                <div class="col-md-9" style="height: 200vh;">
                     <!-- Product sortbar -->
                     <select class="form-select m-3" aria-label="Default select example">
                         <option selected>Open this select menu</option>
@@ -76,8 +55,14 @@
                         }
                         $startRow_rs=$pageNum_rs*$maxRows_rs;
 
-                        // 產品類別查詢
-                        if(isset($_GET['classid'])){
+                        // 產品查詢功能邏輯區
+                        if(isset($_GET['search_name'])){
+                          //使用關鍵字查詢
+                          $queryFirst=sprintf("SELECT * FROM product,product_img,pyclass WHERE p_open=1 AND product_img.sort=1 AND product.p_id=product_img.p_id AND product.classid=pyclass.classid AND (product.p_name OR product.p_price LIKE '%s' ) ORDER BY product.p_id DESC",'%'.$_GET['search_name'].'%');
+                        }elseif(isset($_GET['level'])&& $_GET['level']==1){
+                          //使用第一層類別查詢
+                          $queryFirst=sprintf("SELECT * FROM product,product_img,pyclass WHERE p_opne=1 AND product_img.sort=1 AND product.p_id=product_img.p_id AND product.classid=pyclass.classid AND pyclass.uplink='%d' ORDER BY product.p_id DESC", $_GET['classid']);
+                        }elseif(isset($_GET['classid'])){
                             //使用產品類別查詢
                             $queryFirst=sprintf("SELECT * FROM product, product_img WHERE p_open=1 AND product_img.sort=1 AND product.p_id=product_img.p_id AND product.classid='%d' ORDER BY product.p_id DESC", $_GET['classid']);
                         }else{
@@ -91,8 +76,7 @@
                         $i=1; //控制每row產生
                         ?>
 
-                        <!-- control the card to make product list -->
-                        
+                      <!-- control the card to make product list -->
                       <!-- 查詢是否有資料 -->
                        <?php if($pList01->rowCount()!=0) { ?>
 
@@ -101,13 +85,14 @@
                         <?php if($i%3==1){ ?><div class="row text-center ms-3 g-1"><?php } ?>
                         <div class="col-md-4">
                             <div class="card border-0" style="height: 650px;">
-                                <img src="./images/products/big/<?php echo $pList01_Rows['img_file']; ?>" class="card-img-top" alt="<?php echo $pList01_Rows['p_name']; ?>">
+                              <a href="./product_detail.php?p_id=<?php echo $pList01_Rows['p_id']; ?>">
+                                <img src="./images/products/big/<?php echo $pList01_Rows['img_file']; ?>" class="card-img-top" alt="<?php echo $pList01_Rows['p_name']; ?>"> </a>
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $pList01_Rows['p_name']; ?></h5>
                                     <p class="card-text"><?php echo mb_substr($pList01_Rows['p_intro'],0,30,"utf-8"); ?></p>
                                     <p>NT<?php echo $pList01_Rows['p_price']; ?></p>
-                                    <a href="#" class="btn btn-primary">更多資訊</a>
-                                    <a href="#" class="btn btn-primary">放購物車</a>
+                                    <a href="./product_detail.php?p_id=<?php echo $pList01_Rows['p_id']; ?>" class="btn btn-primary">更多資訊</a>
+                                    <button id="button01[]" name="button01[]" class="btn btn-success" onclick="addcart(<?php echo $pList01_Rows['p_id']; ?>)" >加入購物車</button>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +103,7 @@
                     <div class="mt-5" style="text-align: center;">
                     <!-- produce warming line -->
                     <?php }else{ ?>
-                      <div class="alert alert-danger" role="alert">
+                      <div class="alert alert-danger ms-3" role="alert">
                         抱歉，小編還在搜尋中。
                       </div>
                     <?php } ?>
@@ -160,39 +145,19 @@
       <section id="procedure">
         
         
-      </section>
-      <section id="footer" >
-        <div class="row bg-success position-relative text-white footertop" style="height:400px;">
-        
-          <div class="col-md-4">
-
-            <img src="./images/qrcode.jpg" style="width: 200px;" class="mt-5 mb-5" alt="">
-            <br>
-             掃我到客服
-          </div>
-          <div class="col-md-4">
-            <img src="./images/assets/logov122.png" class="mt-5" style="width: 300px;" alt="">
-          </div>
-          <div class="col-md-4 mt-5 text-decoration-underline">
-            公司名稱：澳打國際
-            <br>
-            公司電話：
-            <br>
-            公司住址：
-            <br>
-            copyright：all right reserved
-          </div>
-        </div>
-
-        
-      </section>
-      
-    </div>
+</section>
+<section id="footer" >
+<?php
+require_once('./footer.php')
+?>
+</section>
+</div>
 
     
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="./js/jslib.js"></script>
   <script>
       AOS.init();
   </script>

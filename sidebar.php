@@ -16,9 +16,18 @@ $i=1;//控制編號順序
         </button>
         </h2>
         <?php
-        //解決sidebar開啟不準確問題
-        if(isset($_GET['classid'])){
-            //如果使用類別查詢需要取得上一層類別
+        //--解決sidebar開啟不準確問題--
+        //若使用產品查詢，需取得類別編號上一層類別
+        if(isset($_GET['p_id'])){
+            $SQLstring=sprintf("SELECT uplink FROM pyclass, product WHERE pyclass.classid=product.classid AND p_id=%d", $_GET['p_id']);
+            $classid_rs=$link->query($SQLstring);
+            $data=$classid_rs->fetch();
+            $ladder=$data['uplink'];
+        }elseif(isset($_GET['level']) && $_GET['level']==1){
+        //使用第一層類別查詢
+            $ladder=$_GET['classid'];
+        }elseif(isset($_GET['classid'])){
+        //如果使用類別查詢需要取得上一層類別
             $SQLstring="SELECT uplink FROM pyclass WHERE level=2 and classid=".$_GET['classid'];
             $classid_rs=$link->query($SQLstring);
             $data=$classid_rs->fetch();
