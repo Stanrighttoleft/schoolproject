@@ -31,15 +31,15 @@
   <!-- navigation -->
   <?php require_once("navbar.php") ?>
 </section>
-<section id="cart" style="height:100vh;">
+<section id="cart" style="min-height:100vh;">
 
 <div class="container-fluid">
   <div class="row align-items-start g-0 d-flex flex-row">
-    <div class="col-md-3" style="height: 200vh;">
+    <div class="col-md-3" >
       <!-- sidebar -->
       <?php require_once("./sidebar.php") ?>
     </div>
-    <div class="col-md-9 mt-3 ps-3" style="height: 200vh;">
+    <div class="col-md-9 mt-3 ps-3" >
       <!-- query the content for shopping cart -->
        <?php
        $SQLstring="SELECT * FROM cart, product, product_img WHERE ip='".$_SERVER['REMOTE_ADDR']."' AND orderid IS NULL AND cart.p_id=product_img.p_id AND cart.p_id=product.p_id AND product_img.sort=1 ORDER BY  cartid DESC";
@@ -89,7 +89,7 @@
               <td colspan="7">累計：<?php echo $ptotal; ?></td>
             </tr>
             <tr>
-              <td colspan="7">運費：</td>
+              <td colspan="7">運費：100</td>
             </tr>
             <tr>
               <td colspan="7" class="text-danger">總計：<?php echo $ptotal +100; ?> </td>
@@ -102,13 +102,13 @@
     </div>
   </div>
 </div>
-  
+</div>
 </section>
 <section id="footer" >
 <?php require_once("./footer.php"); ?>
 </section>
       
-</div>
+
 
     
 <!--plugin section  -->
