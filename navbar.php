@@ -36,9 +36,12 @@
     </ul>
     </li>
 <?php } ?>
-
-
-
+<!-- 查詢推車商品數量 -->
+<?php
+$SQLstring="SELECT * FROM cart WHERE orderid is NULL AND ip='".$_SERVER['REMOTE_ADDR']."'";
+$cart_rs=$link->query($SQLstring);
+?>
+<!-- navigation main part -->
 <div class="top d-flex bg-warning"> 
     <div class="topleft ms-auto w-60 d-flex justify-content-end" style="width: 50%;">
     <img src="./images/assets/facebook.png" class="mx-3" alt="" style="height: 30px;"> 粉絲團 
@@ -48,21 +51,28 @@
     <div class="topright  d-flex justify-content-end w-40" style="width:50%;">
     <img src="" alt="">
 
-    <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <i class="fa-solid fa-magnifying-glass mx-3 " style="font-size: 30px;"></i>
-        <i class="fa-solid fa-user ms-3" style="font-size: 30px;"></i>
-        <i class="fa-solid fa-cart-shopping mx-3" style="font-size: 30px;"></i>
+    <form class="d-flex" role="search" name="search" action="products_p01.php" method="get">
+
+        <!-- searching box -->
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_name" id="search_name" value="<?php echo (isset($_GET['search_name']))?$_GET['search_name']:''; ?>" required>
+        <button type="submit" class="btn p-0 border-0 bg-transparent"><i class="fa-solid fa-magnifying-glass mx-3 " style="font-size: 30px;"></i></button>
+
+        <!-- member -->
+        <i class="fa-solid fa-user ms-3 mt-1" style="font-size: 30px;"></i>
+
+        <!-- shopping cart -->
+        <a href="product_cart.php" class="text-decoration-none text-black position-relative"><i class="fa-solid fa-cart-shopping mx-3 mt-1" style="font-size: 30px;"><span class="badge text-bg-danger position-absolute rounded-circle" style="left:20%; top:10%; height:20px; width:20px; font-size:10px;"><?php echo($cart_rs) ?$cart_rs->rowCount() :''; ?></span></i></a>
         
-    </div></div>
+    </div>
+</div>
 
 <nav class="navbar navbar-expand-lg bg-warning sticky-top" >
     
     
     <div class="container-fluid ms-auto">
-    <a class="navbar-brand" href="#"><img src="./images/assets/logov122.png" style="width: 80px;" alt=""></a>
+    <a class="navbar-brand" href="./index_p01.php"><img src="./images/assets/logov122.png" style="width: 80px;" alt=""></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -103,7 +113,7 @@
         </li>
         </ul>
         
-        </form>
+      </form>
     </div>
     </div>
 </nav>      
