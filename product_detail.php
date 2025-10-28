@@ -106,7 +106,7 @@
              <!--start of the description drop box -->
             <div class="productContent ms-3">
              <?php echo $data['p_content']; ?>
-             <?php require_once('drop-box.php'); ?>
+             
             </div>
           </div>
       </div>
