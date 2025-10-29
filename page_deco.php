@@ -5,7 +5,7 @@
     $cart_rs=$link->query($SQLstring);
     ?>
     <!-- the cart -->
-    <a href="./product_cart.php"><img src="./images/assets/carticon.png" style="width: 100%; height:auto;" alt="" class="position-relative"></a><span class="badge text-bg-danger position-absolute rounded-circle" style="left:70%; font-size:1.5em"><?php echo ($cart_rs) ? $cart_rs->rowCount() :''; ?></span>
+    <a href="./product_cart.php" ><img src="./images/assets/carticon.png" style="width: 100%; height:auto;" alt="" class="position-relative"></a><span class="badge text-bg-danger position-absolute rounded-circle" style="left:70%; font-size:1.5em"><?php echo ($cart_rs) ? $cart_rs->rowCount() :''; ?></span>
 </div>
 <!-- Floating chat/contact box -->
 <div class="floating-box">

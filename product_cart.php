@@ -48,10 +48,11 @@
        ?>
       <!-- cart detail content -->
       <h3 class="mb-3">購物車，你點選的東西都在這裡：</h3>
-      <button id="btn01" class="btn btn-primary" >繼續購物</button>
-      <button id="btn02" class="btn btn-secondary" >回上一頁</button>
-      <button id="btn03" class="btn btn-secondary" >清空</button>
-      <button id="btn04" class="btn btn-danger" >前往結帳</button>
+    <?php if($cart_rs->rowCount()!=0) { ?>
+      <a id="btn01" class="btn btn-primary" href="./products_p01.php" >繼續購物</a>
+      <button id="btn02" name="btn02" class="btn btn-secondary" onclick="window.history.go(-1)" >回上一頁</button>
+      <button id="btn03" class="btn btn-secondary" onclick="btn_confirmLink('確定清空購物車?','shopcart_del.php?mode=2');" >清空</button>
+      <a id="btn04" class="btn btn-danger" href="product_checkout.php" >前往結帳</a>
       <div class="table-responsive-md text-center">
         <table class="table table-hover mt-3 text-center">
           <thead>
@@ -80,7 +81,7 @@
                 </div>
               </td>
               <td>$<?php echo $cart_data['p_price'] * $cart_data['qty']; ?></td>
-              <td><button id="btn[]" class="btn btn-danger">取消</button></td>
+              <td><button id="btn[]" class="btn btn-danger" id="btn[]" name="btn[]" onclick="btn_confirmLink('確定刪除本資料?','shopcart_del.php?mode=1&cartid=<?php echo $cart_data['cartid']; ?>');" >取消</button></td>
             </tr>
             <?php $ptotal+=$cart_data['p_price']*$cart_data['qty']; } ?>
           </tbody>
@@ -98,6 +99,9 @@
           
         </table>
       </div>
+    <?php } else { ?>
+      <div class="alert alert-warning" role="alert">購物車是空的！請先選購商品！</div>
+    <?php } ?>
       
     </div>
   </div>

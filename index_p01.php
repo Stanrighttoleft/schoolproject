@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.1/css/all.css">
     <!-- AOS plugin -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     
   </head>
   <body class="position-relative">
@@ -43,7 +43,7 @@
             <div class="carousel-item position-relative h-100">
               <!-- Another slide (e.g., a different background or image set) -->
               <img src="./images/assets/rabbit.png" class="position-absolute" style="top:40%; left:45%; z-index:2">
-              <img src="./images/assets/fun.png" class="position-absolute" style="left:40%; top:20%;">
+              <img src="./images/assets/fun.png" class="position-absolute" style="left:50%; top:30%;">
               <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%;">
               <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%; left:50%">
             </div>
@@ -172,6 +172,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="./js/jslib.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
       AOS.init();
   </script>
@@ -195,6 +196,7 @@ $(document).ready(function() {
   });
 });
 </script> -->
+
 <script>
 
   //product view
