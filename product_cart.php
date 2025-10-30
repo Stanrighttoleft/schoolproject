@@ -20,6 +20,11 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- Lightbox css plugin -->
     <link rel="stylesheet" href="./css/jquery.lightbox-0.5.css">
+    <style>
+      table input:invalid{
+        border:dotted red 2px;
+      }
+    </style>
     
   </head>
   <body class="position-relative">
@@ -70,8 +75,8 @@
             <?php while($cart_data=$cart_rs->fetch()){ ?>
             <tr>
               <td><?php echo $cart_data['p_id']; ?></td>
-              <td><img src="./images/products/big/<?php echo $cart_data['img_file']; ?>" alt="<?php echo $cart_data['p_name']; ?>" class="img-fluid" ></td>
-              <td><?php echo $cart_data['p_name']; ?></td>
+              <td><a href="./product_detail.php?p_id=<?php echo $cart_data['p_id']; ?>"><img src="./images/products/big/<?php echo $cart_data['img_file']; ?>" alt="<?php echo $cart_data['p_name']; ?>" class="img-fluid" ></a></td>
+              <td><a href="./product_detail.php?p_id=<?php echo $cart_data['p_id']; ?>" class="text-decoration-none text-black"><?php echo $cart_data['p_name']; ?></a></td>
               <td>
                 <h4 class="text-danger"></h4>
               </td>
@@ -141,8 +146,8 @@ $(function(){
   });
 });
 </script>
-<!-- lightbox -->
 <script>
+// lightbox
  $(function(){
   $('a[rel="group"]').lightBox({
     maxHeight:$(window).height()*0.9,
@@ -155,6 +160,8 @@ $(function(){
     txt0f:'至',
   });
  });
+//將變更數量寫入後台資料庫
+
 </script>
 
 

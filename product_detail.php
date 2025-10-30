@@ -38,7 +38,7 @@
             <!-- sidebar -->
               <?php require_once("./sidebar.php") ?>
           </div>
-          <div class="col-md-9" style="height: 200vh;">
+          <div class="col-md-9" style="height: 250vh;">
             <!-- product-content -->
              <?php require_once("./product_detail_content.php") ?>
           </div>

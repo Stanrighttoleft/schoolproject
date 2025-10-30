@@ -6,6 +6,14 @@
 <?php require_once("php_lib.php"); ?>
 
 <!doctype html>
+<style>
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  transform: translateY(-4px) ;
+  opacity: 80%;
+  transition: all 0.3s ease;
+}
+</style>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -48,7 +56,7 @@
                     <!-- the product card -->
                     <?php
                         //get product information from database
-                        $maxRows_rs=12; //maxpage
+                        $maxRows_rs=9; //max products per page
                         $pageNum_rs=0; //start page
                         if(isset($_GET['pageNum_rs'])){
                         $pageNum_rs=$_GET['pageNum_rs'];
@@ -82,11 +90,11 @@
 
                       <!-- 列出資料 -->
                       <?php while($pList01_Rows=$pList01->fetch()) { ?>
-                        <?php if($i%3==1){ ?><div class="row text-center ms-3 g-1"><?php } ?>
+                        <?php if($i%3==1){ ?><div class="row text-center ms-3 g-2"><?php } ?>
                         <div class="col-md-4">
-                            <div class="card border-0" style="height: 650px;">
-                              <a href="./product_detail.php?p_id=<?php echo $pList01_Rows['p_id']; ?>">
-                                <img src="./images/products/big/<?php echo $pList01_Rows['img_file']; ?>" class="card-img-top" alt="<?php echo $pList01_Rows['p_name']; ?>"> </a>
+                            <div class="card rounded-2 mb-1 " style="min-height: 550px; ">
+                              <a href="./product_detail.php?p_id=<?php echo $pList01_Rows['p_id']; ?>" >
+                                <img src="./images/products/big/<?php echo $pList01_Rows['img_file']; ?>" class="card-img-top" style="max-height:250px; width:100%; object-fit:contain;" alt="<?php echo $pList01_Rows['p_name']; ?>"> </a>
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $pList01_Rows['p_name']; ?></h5>
                                     <p class="card-text"><?php echo mb_substr($pList01_Rows['p_intro'],0,30,"utf-8"); ?></p>

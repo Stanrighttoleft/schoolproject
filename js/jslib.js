@@ -1,4 +1,4 @@
-// 加入購物車城市
+// 加入購物車
 function addcart(p_id) {
   var qty = $("#qty").val();
   if (qty <= 0) {
