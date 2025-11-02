@@ -1,4 +1,4 @@
-<div class="position-fixed carticon rounded-circle bg-white shadow" style="top:30%; right:20%; width:100px; height:100px; z-index:5;" >
+<div class="position-fixed carticon rounded-circle bg-white shadow" style="top:70%; right:80%; width:100px; height:100px; z-index:5;" >
     <!-- find quantity for cart -->
     <?php
     $SQLstring="SELECT * FROM cart WHERE orderid is NULL AND ip='".$_SERVER['REMOTE_ADDR']."'";

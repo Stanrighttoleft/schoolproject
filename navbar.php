@@ -76,12 +76,15 @@ $cart_rs=$link->query($SQLstring);
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <?php if (isset($_SESSION['login'])){ ?>
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#" style="font-size: 20px; font-weight:600;">瞭解澳洲</a>
+            <a class="nav-link active" href="javascript:void(0);" onclick="btn_confirmLink('是否確定登出?','logout.php')" style="font-size: 20px; font-weight:600;">會員登出</a>
         </li>
+        <?php } else { ?>
         <li class="nav-item">
-            <a class="nav-link" href="#" style="font-size: 20px; font-weight:600;">澳洲時事</a>
+            <a class="nav-link" href="./member_login.php" style="font-size: 20px; font-weight:600;">會員登入</a>
         </li>
+        <?php } ?>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
             澳洲代購

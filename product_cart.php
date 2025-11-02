@@ -45,68 +45,8 @@
       <?php require_once("./sidebar.php") ?>
     </div>
     <div class="col-md-9 mt-3 ps-3" >
-      <!-- query the content for shopping cart -->
-       <?php
-       $SQLstring="SELECT * FROM cart, product, product_img WHERE ip='".$_SERVER['REMOTE_ADDR']."' AND orderid IS NULL AND cart.p_id=product_img.p_id AND cart.p_id=product.p_id AND product_img.sort=1 ORDER BY  cartid DESC";
-       $cart_rs=$link->query($SQLstring);
-       $ptotal=0; //設定累加變數初始為0
-       ?>
-      <!-- cart detail content -->
-      <h3 class="mb-3">購物車，你點選的東西都在這裡：</h3>
-    <?php if($cart_rs->rowCount()!=0) { ?>
-      <a id="btn01" class="btn btn-primary" href="./products_p01.php" >繼續購物</a>
-      <button id="btn02" name="btn02" class="btn btn-secondary" onclick="window.history.go(-1)" >回上一頁</button>
-      <button id="btn03" class="btn btn-secondary" onclick="btn_confirmLink('確定清空購物車?','shopcart_del.php?mode=2');" >清空</button>
-      <a id="btn04" class="btn btn-danger" href="product_checkout.php" >前往結帳</a>
-      <div class="table-responsive-md text-center">
-        <table class="table table-hover mt-3 text-center">
-          <thead>
-            <tr class="table-warning text-center" >
-              <td width="10%">產品編號</td>
-              <td width="10%">圖片</td>
-              <td width="25%">名稱</td>
-              <td width="15%">價格</td>
-              <td width="10%">數量</td>
-              <td width="15%">小計</td>
-              <td width="15%">下次再買</td>
-            </tr>
-          </thead>
-          <tbody>
-            <?php while($cart_data=$cart_rs->fetch()){ ?>
-            <tr>
-              <td><?php echo $cart_data['p_id']; ?></td>
-              <td><a href="./product_detail.php?p_id=<?php echo $cart_data['p_id']; ?>"><img src="./images/products/big/<?php echo $cart_data['img_file']; ?>" alt="<?php echo $cart_data['p_name']; ?>" class="img-fluid" ></a></td>
-              <td><a href="./product_detail.php?p_id=<?php echo $cart_data['p_id']; ?>" class="text-decoration-none text-black"><?php echo $cart_data['p_name']; ?></a></td>
-              <td>
-                <h4 class="text-danger"></h4>
-              </td>
-              <td style="min-width:100px;">
-                <div class="input-group">
-                  <input type="number" class="form-control" id="qty[]" name="qty[]" value="<?php echo $cart_data['qty']; ?>" min="1" max="19" cartid="<?php echo $cart_data['cartid']; ?>" required>
-                </div>
-              </td>
-              <td>$<?php echo $cart_data['p_price'] * $cart_data['qty']; ?></td>
-              <td><button id="btn[]" class="btn btn-danger" id="btn[]" name="btn[]" onclick="btn_confirmLink('確定刪除本資料?','shopcart_del.php?mode=1&cartid=<?php echo $cart_data['cartid']; ?>');" >取消</button></td>
-            </tr>
-            <?php $ptotal+=$cart_data['p_price']*$cart_data['qty']; } ?>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="7">累計：<?php echo $ptotal; ?></td>
-            </tr>
-            <tr>
-              <td colspan="7">運費：100</td>
-            </tr>
-            <tr>
-              <td colspan="7" class="text-danger">總計：<?php echo $ptotal +100; ?> </td>
-            </tr>
-          </tfoot>
-          
-        </table>
-      </div>
-    <?php } else { ?>
-      <div class="alert alert-warning" role="alert">購物車是空的！請先選購商品！</div>
-    <?php } ?>
+      <!-- cart content -->
+      <?php require_once('./product_cart_content.php') ?>
       
     </div>
   </div>
@@ -116,6 +56,18 @@
 <section id="footer" >
 <?php require_once("./footer.php"); ?>
 </section>
+
+<!--  Toast container -->
+<div class="toast-container position-fixed translate-middle p-3" style="top:50%; right:20%;">
+  <div id="liveToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000">
+    <div class="d-flex">
+      <div class="toast-body fs-4 text-center" id="toastBody">
+        <!-- Message text will be inserted here -->
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
       
 
 
@@ -136,7 +88,7 @@ document.getElementById("chatToggle").addEventListener("click", function() {
   const panel = document.getElementById("chatPanel");
   panel.style.display = panel.style.display === "block" ? "none" : "block";
 });
-//change the main image when hover
+//change the main image when hover for light box
 $(function(){
   // when hover change #showGoods src
   $(".smpic").on("mouseover",function(){
@@ -160,8 +112,49 @@ $(function(){
     txt0f:'至',
   });
  });
-//將變更數量寫入後台資料庫
+// toast function for the qty
+function showToast(message,type="primary"){
+  const toastLiveExample=document.getElementById('liveToast');
+  const toastBody=document.getElementById('toastBody');
 
+  // change color type dynamically
+  toastLiveExample.className=`toast align-items-center text-bg-${type} border-0`;
+  toastBody.textContent=message;
+  
+  const toastBootstrap=bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  toastBootstrap.show();
+}
+
+//將變更數量寫入後台資料庫
+$(".cartQty").change(function(){
+  let qty=$(this).val();
+  const cartid=$(this).attr("cartid");
+  if(qty<=0 || qty>=20){
+    showToast("數量請設為0以上，20比以上的數量請與網站小編聯繫大宗貨物購買方法！", 'danger');
+    return false;
+  }
+  $.ajax({
+    url:'change_qty.php',
+    type:'post',
+    dataType:'json',
+    data:{
+      cartid:cartid,
+      qty:qty,
+    },
+    success:function(data){
+      if(data.c==true){
+        showToast(data.m, 'success');
+        setTimeout(()=>window.location.reload(),1000);
+        
+      }else{
+        showToast(data.m,'warning')
+      }
+    },
+    error:function(data){
+      showToast("無法建立連線，請聯絡管理人員",'danger')
+    }
+  });
+});
 </script>
 
 
