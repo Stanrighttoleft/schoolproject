@@ -16,6 +16,7 @@ if(isset($_POST['inputAccount']) && isset($_POST['inputPassword'])){
         $_SESSION['emailid']=$data['emailid'];
         $_SESSION['email']=$data['email'];
         $_SESSION['cname']=$data['cname'];
+        $_SESSION['imgname']=$data['imgname']; //加入會員圖像
         $retcode=array("c"=>"1","m"=>'會員驗證成功。');
       }else{
         $retcode=array("c"=>"2","m"=>'會員帳號被鎖定!請聯絡管理員。');

@@ -1,3 +1,10 @@
+<style>
+    .dropdown-toggle.member::after{
+        position: relative;
+        top: -3px;
+    }
+</style>
+
 <!-- php function multiList01 for the navbar -->
 <?php
     function multiList01(){
@@ -58,8 +65,13 @@ $cart_rs=$link->query($SQLstring);
         <button type="submit" class="btn p-0 border-0 bg-transparent"><i class="fa-solid fa-magnifying-glass mx-3 " style="font-size: 30px;"></i></button>
 
         <!-- member -->
-        <i class="fa-solid fa-user ms-3 mt-1" style="font-size: 30px;"></i>
-
+         <?php if (isset($_SESSION['login'])){ ?>
+            <a class="nav-link active" href="javascript:void(0);" onclick="btn_confirmLink('是否確定登出?','logout.php')" style="font-size: 20px; font-weight:600;"><i class="fa-solid fa-right-from-bracket ms-3 mt-1" style="font-size:30px;"></i></a>
+        
+        <?php } else { ?>
+            <a class="nav-link" href="./member_login.php" style="font-size: 20px; font-weight:600;"><i class="fa-solid fa-user ms-3 mt-1" style="font-size: 30px;"></i></a>
+        <?php } ?>
+        
         <!-- shopping cart -->
         <a href="product_cart.php" class="text-decoration-none text-black position-relative"><i class="fa-solid fa-cart-shopping mx-3 mt-1" style="font-size: 30px;"><span class="badge text-bg-danger position-absolute rounded-circle" style="left:20%; top:10%; height:20px; width:20px; font-size:10px;"><?php echo($cart_rs) ?$cart_rs->rowCount() :''; ?></span></i></a>
         
@@ -76,6 +88,7 @@ $cart_rs=$link->query($SQLstring);
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- change the member icon when login -->
         <?php if (isset($_SESSION['login'])){ ?>
         <li class="nav-item">
             <a class="nav-link active" href="javascript:void(0);" onclick="btn_confirmLink('是否確定登出?','logout.php')" style="font-size: 20px; font-weight:600;">會員登出</a>
@@ -85,17 +98,20 @@ $cart_rs=$link->query($SQLstring);
             <a class="nav-link" href="./member_login.php" style="font-size: 20px; font-weight:600;">會員登入</a>
         </li>
         <?php } ?>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600;">
-            澳洲代購
+        <!-- dynamicly change the member image -->
+        <?php if(isset($_SESSION['login'])) { ?>
+        <li class="nav-item dropdown mx-2  ">
+            <a class="nav-link dropdown-toggle member" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 20px; font-weight:600; ">
+                <img src="./uploads/<?php echo($_SESSION['imgname']!='')? $_SESSION['imgname']:'avatar.svg'; ?>" width="40" height="40" class="rounded-circle me-2" alt="" style="vertical-align:middle;"><span class="" style="position:relative; top:-3.5px;">會員專區</span>
+           
             </a>
-            <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+            <div class="dropdown-menu">
+            <a class="dropdown-item" href="member_orderlist.php">訂單列表</a>
+            <a class="dropdown-item" href="member_profile.php">編輯個人資訊</a>
+            <a class="dropdown-item" href="#" onclick="btn_confirmLink('請確認是否登出','logout.php')">登出</a>
+            </div>
         </li>
+        <?php } ?>
 
         <!-- The dropdown component I am going to use -->
         <?php multiList01(); ?>
