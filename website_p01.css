@@ -2,12 +2,18 @@
   min-height: 100vh;
 }
 
-#banner {
+
+.the-one{
   background-image: linear-gradient(white, orange),
     url(./images/assets/bg-banner.jpg);
   background-size: cover;
   background-position: 0 80%;
-  background-blend-mode: hard-light;
+  background-blend-mode:color-burn;
+}
+.the-two{
+  background-image:url(./images/assets/campsite.jpg) ;
+  background-size: cover;
+  background-blend-mode: normal;
 }
 .scrollwrapper {
   overflow-x: auto;

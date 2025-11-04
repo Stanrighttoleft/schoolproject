@@ -32,7 +32,7 @@
     <section id="banner"   style="width: 100%; height: 600px;">
       <!--  carousel -->
         <div id="carouselBanner" class="carousel slide h-100 carousel-fade" data-bs-ride="carousel">
-          <div class="carousel-inner h-100">
+          <div class="carousel-inner h-100 the-one">
             <div class="carousel-item active position-relative h-100">
               <img src="./images/assets/rabbit.png" class="position-absolute" style="top:30%; left:45%; z-index:2">
               <img src="./images/assets/fun.png" class="position-absolute" style="left:50%; top:20%;">
@@ -40,19 +40,17 @@
               <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%; left:50%">
             </div>
 
-            <div class="carousel-item position-relative h-100">
+            <div class="carousel-item position-relative h-100 the-two d-flex justify-content-center align-items-center">
               <!-- Another slide (e.g., a different background or image set) -->
-              <img src="./images/assets/rabbit.png" class="position-absolute" style="top:40%; left:45%; z-index:2">
-              <img src="./images/assets/fun.png" class="position-absolute" style="left:50%; top:30%;">
-              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%;">
-              <img src="./images/assets/grass1.png" class="position-absolute" style="bottom:0%; left:50%">
+               <h2 id="typingText" class="text-white fw-bold shadow-lg"></h2>
+              
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselBanner" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselBanner" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
@@ -198,6 +196,28 @@ $(document).ready(function() {
 </script> -->
 
 <script>
+  // typing effect on the banner
+  document.addEventListener("DOMContentLoaded",function(){
+    const text="感受曠野的早晨，從Coleman黑膠帳篷開始！";
+    const target=document.getElementById("typingText");
+    let index=0;
+    let typingInterval;
+  
+  function typeEffect(){
+    if(index<text.length){
+      target.textContent+=text.charAt(index);
+      index++;
+      typingInterval=setTimeout(typeEffect,100);
+    }else{
+      setTimeout(() => {
+        target.textContent="";
+        index=0;
+        typeEffect();
+      }, 1000);
+    }
+  }
+  typeEffect();
+  })
 
   //product view
 document.addEventListener("DOMContentLoaded", () => {

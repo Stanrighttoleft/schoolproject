@@ -96,17 +96,20 @@ if(isset($_POST['formct']) && $_POST['formct']=='reg'){
             <div class="shadow-sm rounded-3 ms-3" style="background-color:rgba(255,255,255,0.8);" >
               <div class="row mt-3">
                 <div class="col-12 text-center">
-                  <h1>會員註冊頁面</h1>
+                  <h1 class="mt-5">會員註冊</h1>
                   <p>請輸入相關資料，*為必填欄位</p>
+                  <hr class="my-5">
                 </div>
               </div>
               <div class="row">
                 <div class="col-8 offset-2 text-left">
                   <form action="member_register.php" method="POST" name="reg" id="reg">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-4">
+                      <label for="email" class="form-label">會員信箱(將用作登入帳號)：</label>
                       <input type="email" name="email" id="email" class="form-control" placeholder="請輸入email帳號" autocomplete="off">
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-4">
+                      <label for="email" class="form-label">密碼：</label>
                       <input type="password" name="pw1" id="pw1" class="form-control" placeholder="請輸入密碼" >
                     </div>
                     <div class="input-group mb-3">
