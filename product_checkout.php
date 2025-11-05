@@ -1,9 +1,16 @@
 <!-- if session not start then start it -->
 <?php (!isset($_SESSION))? session_start(): ""; ?>
 <!-- import the database -->
- <?php require_once('Connections/conn_db.php');?>
-  <!-- import common PHP function -->
+<?php require_once('Connections/conn_db.php');?>
+<!-- import common PHP function -->
 <?php require_once("php_lib.php"); ?>
+<!-- check wheather the user is login -->
+<?php
+if(!isset($_SESSION['login'])){
+  $sPath="member_login.php?sPath=product_checkout.php";
+  header(sprintf("Location:%s",$sPath));
+}
+?>
 
 <!doctype html>
 <html lang="en">
@@ -55,14 +62,114 @@
     </div>
     </div>
     <div class="card col ms-3">
-    <div class="card-header" style="color:#000;"><i class="fas fa-truck fa-flip-horizontal me-1"></i>付款人資訊</div>
+    <div class="card-header" style="color:#000;"><i class="fas fa-truck fa-flip-horizontal me-1"></i>付款方式</div>
     <div class="card-body">
-        <h4 class="card-title">付款人資訊：</h4>
-        <h5 class="card-title">姓名：</h5>
-        <p class="card-text">電話：</p>
-        <p class="card-text">郵遞區號：</p>
-        <p class="card-text">地址：</p>
-        <a href="#" class="btn btn-primary">選擇其他收件人：</a>
+<!-- bootstrap card and tabs -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" style="font-size:14pt;">貨到付款</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" style="font-size:14pt;" aria-selected="false"  >信用卡付款</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" style="font-size:14pt;">銀行轉帳</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="epay-tab" data-bs-toggle="tab" data-bs-target="#epay" type="button" role="tab" aria-controls="epay" aria-selected="false" style="font-size:14pt;">電子支付</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active ps-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <h4 class="card-title pt-3">收件人資訊：</h4>
+    <h5 class="card-title">姓名：</h5>
+    <p class="card-text">電話：</p>
+    <p class="card-text">郵遞區號：</p>
+    <p class="card-text">地址：</p>
+  </div>
+  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+<!-- 信用卡分頁 -->
+<table class="table caption-top">
+  <caption>選擇付款帳戶</caption>
+  <thead>
+    <tr>
+      <th scope="col" width="5%">#</th>
+      <th scope="col" width="35%">信用卡系統</th>
+      <th scope="col" width="30%">發卡銀行</th>
+      <th scope="col" width="30%">信用卡號</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><input type="radio" name="creditCard" id="creditCard[]" checked></th>
+      <td><img src="images/assets/Visa_Inc._logo.svg" alt="visa" class="img-fluid"></td>
+      <td>玉山銀行</td>
+      <td>1234****</td>
+    </tr>
+    <tr>
+      <th scope="row"><input type="radio" name="creditCard" id="creditCard[]" checked></th>
+      <td><img src="images/assets/MasterCard_Logo.svg" alt="master" class="img-fluid"></td>
+      <td>玉山銀行</td>
+      <td>1234****</td>
+    </tr>
+    <tr>
+      <th scope="row"><input type="radio" name="creditCard" id="creditCard[]" checked></th>
+      <td><img src="images/assets/UnionPay_logo.svg" alt="unionpay" class="img-fluid"></td>
+      <td>玉山銀行</td>
+      <td>1234****</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<button type="button" class="btn btn-outline-success">使用其他信用卡付款</button>
+  </div>
+  <!-- 建立銀行轉帳分頁 -->
+  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+    <h4 class="card-title pt-3">ATM匯款資訊：</h4>
+    <img src="./images/assets/Cathay-bk-rgb-db.svg" alt="cathay" class="img-fluid">
+    <h5 class="card-title">匯款銀行： 銀行代碼：</h5>
+    <h5 class="card-title">姓名：</h5>
+    <p class="card-text">匯款帳號：</p>
+    <p class="card-text">備註：</p>
+  </div>
+  <!-- 建立電子支付分頁 -->
+  <div class="tab-pane fade" id="epay" role="tabpanel" aria-labelledby="epay-tab" tabindex="0">
+    
+<table class="table caption-top">
+  <caption>選擇電子支付方式</caption>
+  <thead>
+    <tr>
+      <th scope="col" width="5%">#</th>
+      <th scope="col" width="35%">電子支付系統</th>
+      <th scope="col" width="60%">電子支付系統</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><input type="radio" name="epay[]" id="epay[]" checked></th>
+      <td><img src="images/assets/Apple_Pay_logo.svg" alt="visa" class="img-fluid"></td>
+      <td>Apple Pay</td>
+    </tr>
+    <tr>
+      <th scope="row"><input type="radio" name="epay[]" id="epay[]"></th>
+      <td><img src="images/assets/MasterCard_Logo.svg" alt="master" class="img-fluid"></td>
+      <td>玉山銀行</td>
+      <td>1234****</td>
+    </tr>
+    <tr>
+      <th scope="row"><input type="radio" name="creditCard" id="creditCard[]" checked></th>
+      <td><img src="images/assets/UnionPay_logo.svg" alt="unionpay" class="img-fluid"></td>
+      <td>玉山銀行</td>
+      <td>1234****</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+</div>
+
+<!-- the end of bootstrap card and tabs -->
+        
     </div>
     </div>
 </div>
