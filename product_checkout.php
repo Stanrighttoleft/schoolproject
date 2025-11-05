@@ -11,6 +11,14 @@ if(!isset($_SESSION['login'])){
   header(sprintf("Location:%s",$sPath));
 }
 ?>
+<style>
+  .table td,.table th{
+    padding: .75rem;
+    vertical-align: top;
+    border-bottom: none;
+    border-top: 1px solid #dee2e6;
+  }
+</style>
 
 <!doctype html>
 <html lang="en">
@@ -40,207 +48,21 @@ if(!isset($_SESSION['login'])){
 </section>
 <section id="productcontent">
   <div class="container-fluid">
-      <div class="row align-items-start g-0 d-flex flex-row">
-          <div class="col-md-3" style="height: 200vh;">
+      <div class="row align-items-start g-0 d-flex flex-row" style="height:150vh;">
+          <div class="col-md-3" >
             <!-- sidebar -->
               <?php require_once("./sidebar.php") ?>
           </div>
-          <div class="col-md-9" style="height: 250vh;">
-            <!-- checkoutpage content -->
-<h3>會員結帳作業</h3>
-
-<div class="row">
-    <div class="card col">
-    <div class="card-header" style="color:#007bff;"><i class="fas fa-truck fa-flip-horizontal me-1"></i>配送資訊</div>
-    <div class="card-body">
-        <h4 class="card-title">收件人資訊：</h4>
-        <h5 class="card-title">姓名：</h5>
-        <p class="card-text">電話：</p>
-        <p class="card-text">郵遞區號：</p>
-        <p class="card-text">地址：</p>
-        <a href="#" class="btn btn-primary">選擇其他收件人：</a>
-    </div>
-    </div>
-    <div class="card col ms-3">
-    <div class="card-header" style="color:#000;"><i class="fas fa-truck fa-flip-horizontal me-1"></i>付款方式</div>
-    <div class="card-body">
-<!-- bootstrap card and tabs -->
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" style="font-size:14pt;">貨到付款</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" style="font-size:14pt;" aria-selected="false"  >信用卡付款</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" style="font-size:14pt;">銀行轉帳</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="epay-tab" data-bs-toggle="tab" data-bs-target="#epay" type="button" role="tab" aria-controls="epay" aria-selected="false" style="font-size:14pt;">電子支付</button>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active ps-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-    <h4 class="card-title pt-3">收件人資訊：</h4>
-    <h5 class="card-title">姓名：</h5>
-    <p class="card-text">電話：</p>
-    <p class="card-text">郵遞區號：</p>
-    <p class="card-text">地址：</p>
-  </div>
-  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-<!-- 信用卡分頁 -->
-<table class="table caption-top">
-  <caption>選擇付款帳戶</caption>
-  <thead>
-    <tr>
-      <th scope="col" width="5%">#</th>
-      <th scope="col" width="35%">信用卡系統</th>
-      <th scope="col" width="30%">發卡銀行</th>
-      <th scope="col" width="30%">信用卡號</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"><input type="radio" name="creditCard" id="creditCard[]" checked></th>
-      <td><img src="images/assets/Visa_Inc._logo.svg" alt="visa" class="img-fluid"></td>
-      <td>玉山銀行</td>
-      <td>1234****</td>
-    </tr>
-    <tr>
-      <th scope="row"><input type="radio" name="creditCard" id="creditCard[]" checked></th>
-      <td><img src="images/assets/MasterCard_Logo.svg" alt="master" class="img-fluid"></td>
-      <td>玉山銀行</td>
-      <td>1234****</td>
-    </tr>
-    <tr>
-      <th scope="row"><input type="radio" name="creditCard" id="creditCard[]" checked></th>
-      <td><img src="images/assets/UnionPay_logo.svg" alt="unionpay" class="img-fluid"></td>
-      <td>玉山銀行</td>
-      <td>1234****</td>
-    </tr>
-  </tbody>
-</table>
-<hr>
-<button type="button" class="btn btn-outline-success">使用其他信用卡付款</button>
-  </div>
-  <!-- 建立銀行轉帳分頁 -->
-  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-    <h4 class="card-title pt-3">ATM匯款資訊：</h4>
-    <img src="./images/assets/Cathay-bk-rgb-db.svg" alt="cathay" class="img-fluid">
-    <h5 class="card-title">匯款銀行： 銀行代碼：</h5>
-    <h5 class="card-title">姓名：</h5>
-    <p class="card-text">匯款帳號：</p>
-    <p class="card-text">備註：</p>
-  </div>
-  <!-- 建立電子支付分頁 -->
-  <div class="tab-pane fade" id="epay" role="tabpanel" aria-labelledby="epay-tab" tabindex="0">
-    
-<table class="table caption-top">
-  <caption>選擇電子支付方式</caption>
-  <thead>
-    <tr>
-      <th scope="col" width="5%">#</th>
-      <th scope="col" width="35%">電子支付系統</th>
-      <th scope="col" width="60%">電子支付系統</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"><input type="radio" name="epay[]" id="epay[]" checked></th>
-      <td><img src="images/assets/Apple_Pay_logo.svg" alt="visa" class="img-fluid"></td>
-      <td>Apple Pay</td>
-    </tr>
-    <tr>
-      <th scope="row"><input type="radio" name="epay[]" id="epay[]"></th>
-      <td><img src="images/assets/MasterCard_Logo.svg" alt="master" class="img-fluid"></td>
-      <td>玉山銀行</td>
-      <td>1234****</td>
-    </tr>
-    <tr>
-      <th scope="row"><input type="radio" name="creditCard" id="creditCard[]" checked></th>
-      <td><img src="images/assets/UnionPay_logo.svg" alt="unionpay" class="img-fluid"></td>
-      <td>玉山銀行</td>
-      <td>1234****</td>
-    </tr>
-  </tbody>
-</table>
-
-  </div>
-</div>
-
-<!-- the end of bootstrap card and tabs -->
-        
-    </div>
-    </div>
-</div>
-<div class="table-responsive-md">
-  <table class="table table-hover mt-3">
-    <thead>
-      <tr class="text-bg-primary">
-        <td width="10%">產品編號</td>
-        <td width="10%">圖片</td>
-        <td width="30%">名稱</td>
-        <td width="15%">價格</td>
-        <td width="15%">數量</td>
-        <td width="20%">小計</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td><img src="" alt=""></td>
-        <td>Hi</td>
-        <td>
-          <h4>$9999</h4>
-        </td>
-        <td>10</td>
-        <td>
-          <h4 class="text-danger pt-1">$99999</h4>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td><img src="" alt=""></td>
-        <td>Hi</td>
-        <td>
-          <h4>$9999</h4>
-        </td>
-        <td>10</td>
-        <td>
-          <h4 class="text-danger pt-1">$99999</h4>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot class="text-center">
-      <tr>
-        <td colspan="7">累計：</td>
-      </tr>
-      <tr>
-        <td colspan="7">運費：</td>
-      </tr>
-      <tr>
-        <td colspan="7" class="text-danger">總計：</td>
-      </tr>
-      <tr >
-        <td colspan="7"><button id="btn04" name="btn04" class="btn btn-danger"><i class="fas fa-cart-arrow-down pr-2"></i>確認結帳</button></td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+          <div class="col-md-9 ps-4 my-3">
+            <!-- checkout content not including modal -->
+             <?php require_once('./product_checkout_content.php') ?>
+            
              
           </div>
       </div>
   </div>
 </section>
-<section id="productview" class="p-5 pt-1" data-aos="zoom-in-up">
-    
-</section>
-<section id="news">
-</section>
-<section id="aboutus" class="bg-warning">
-</section>
-<section id="procedure"> 
-</section>
+ 
 <section id="footer" >
 <?php
 require_once('./footer.php')
@@ -249,7 +71,105 @@ require_once('./footer.php')
       
 </div>
 
+<!-- bootstrap Modal -->
+<!-- Modal -->
+<?php
+// 取得所有收件人資料
+$SQLstring=sprintf("SELECT * , city.Name AS ctName,town.Name AS toName FROM addbook,city,town WHERE emailid='%d' AND addbook.myZip=town.Post AND town.AutoNo=city.AutoNo", $_SESSION['emailid']);
+$addbook_rs=$link->query($SQLstring);
+?>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">收件人資訊</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+            <div class="row">
+                <div class="col">
+                 
+                    <input type="text" name="cname" id="cname" class="form-control" placeholder="收件人姓名">
+                </div>
+                <div class="col">
+                    <input type="text" name="mobile" id="mobile" class="form-control" placeholder="收件人電話">
+                </div>
+                <div class="col">
+                   
+                    <select name="myCity" id="myCity" class="form-control">
+                        <option value="">請選擇市區</option>
+                        <!-- 建立選擇市區的程式 -->
+                        <?php $city="SELECT * FROM `city` WHERE State=0"; $city_rs=$link->query($city);
+                        while($city_rows=$city_rs->fetch()) { ?>
+                          <option value="<?php echo $city_rows['AutoNo']; ?>">
+                            <?php echo $city_rows['Name']; ?>
+                          </option>
+                        <?php } ?>
+                    </select><br>
+                </div>
+                <div class="col">
+                    <select name="myTown" id="myTown" class="form-control">
+                        <option value="">請選擇地區</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <input type="hidden" name="myZip" id="myZip" value="">
+                    <label for="address" id="add_label" name="add_label">郵遞區號：</label>
+                    <input type="text" name="address" id="address" class="form-control" placeholder="地址">
+                </div>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-success" id="recipient" name="recipient">新增收件人</button>
+                </div>
+            </div>
+        </form>
+        <hr>
+<!-- 收件人表格 -->
+<table class="table">
+  <thead class="table-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">收件人</th>
+        <th scope="col">電話</th>
+        <th scope="col">地址</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- 插入收件人資訊到表單中 -->
+     <?php while($data=$addbook_rs->fetch()) { ?>
+    <tr>
+        <th scope="row"><input type="radio" name="gridRadios" id="gridRadios[]" value="<?php echo $data['addressid'] ?>" <?php echo ($data['setdefault']) ? 'checked':'';?>>
+        </th>
+        <td><?php echo $data['cname']; ?></td>
+        <td><?php echo $data['mobile']; ?></td>
+        <td><?php echo $data['myZip'].$data['ctName'].$data['toName'].$data['address']; ?></td>
+    </tr>
+    <?php }?>
     
+  </tbody>
+</table>
+
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- the end of bootstrap Modal -->
+<!-- start of loading page -->
+<div id="loading" name="loading" style="display:none; position:fixed; width:100%; height:100%; top:0; left:0; background-color:rgba(255,255,255,.5);z-index:9999;"><i class="fas fa-spinner fa-spin fa-5x fa-fw" style="position:absolute;top:50%;left:50%;"></i></div>
+
+ 
+</body>
+</html>
+
 <!--plugin section  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -278,20 +198,172 @@ $(function(){
 </script>
 <!-- lightbox -->
 <script>
- $(function(){
-  $('a[rel="group"]').lightBox({
-    maxHeight:$(window).height()*0.9,
-    maxWidth:$(window).width()*0.9,
-    overlayBgColor:'#000',
-    overlayOpacity:0.5,
-    fixedNavigation:true,
-    containerResizeSpeed:700,
-    txtImage:"產品",
-    txt0f:'至',
+  $(function(){
+    //取得縣市代碼後查詢鄉鎮市的名稱
+    $("#myCity").change(function(){
+      var CNo=$('#myCity').val();
+      if(CNo==""){
+        return false;
+      }
+      $('#myZip').val("");
+      $('#add_label').html("郵遞區號：")
+      $.ajax({
+        // 將鄉鎮市的名稱從後台取回
+        url:'Town_ajax.php',
+        type:'post',
+        data:{
+          CNo:CNo,
+        },
+        success:function(data){
+          if(data.c==true){
+            $('#myTown').html(data.m);
+            
+          }else{
+            alert("資料庫回傳錯誤"+data.m)
+          }
+        },
+        error:function(data){
+          alert("系統目前無法連接到後台資料庫")
+        }
+      })
+    });
+    // 取得鄉鎮代碼，查詢郵遞區號放入#myZip,#zipcode
+    $("#myTown").change(function(){
+      var AutoNo=$('#myTown').val();
+      if(AutoNo==''){
+        $('#myZip').val("");
+        $('#add_label').html("");
+        return false;
+      }
+      $.ajax({
+        url:'Zip_ajax.php',
+        type:'get',
+        dataType:'json',
+        data:{
+          AutoNo:AutoNo,
+        },
+        success:function(data){
+          if(data.c==true){
+            $('#myZip').val(data.Post);
+            $('#add_label').html('郵遞區號：'+data.Post +data.Cityname+data.Name);
+          }else{
+            alert("伺服器回傳錯誤:"+data.m);
+          }
+        },
+        error:function(data){
+          alert("系統目前無法連結到後台資料庫");
+        }
+      });
+    });
+  })
+  // 新增收件人程式
+  $('#recipient').click(function(){
+    var validate=0,
+    msg="";
+    var cname=$("#cname").val();
+    var mobile=$("#mobile").val();
+    var myZip=$("#myZip").val();
+    var address=$("#address").val();
+    if(cname==""){
+      msg=msg+"收件人不得為空白！;\n";
+      validate=1;
+    }
+    if(mobile==""){
+      msg=msg+"電話不得為空白！;\n";
+      validate=1;
+    }
+    var checkphone=/^[0]{1}[9]{1}[0-9]{8}$/;
+    if(checkphone.test(mobile)==false){
+      msg=msg+"電話格式有誤！;\n";
+      validate=1;
+    }
+    if(myZip==""){
+      msg=msg+"郵遞區號不得為空白！；\n";
+      validate=1;
+    }
+    if(address==""){
+      msg=msg+"地址不得為空白！;\n";
+      validate=1;
+    }
+    if(validate){
+      alert(msg);
+      return false
+    }
+    $.ajax({
+      url:'addbook.php',
+      type:'post',
+      dataType:'json',
+      data:{
+        cname:cname,
+        mobile:mobile,
+        myZip:myZip,
+        address:address,
+      },
+      success:function(data){
+        if(data.c==true){
+          alert(data.m);
+          window.location.reload();
+        }else{
+          alert("資料庫回應錯誤："+data.m);
+        }
+      },
+      error:function(data){
+        alert("系統無法與資料庫建立連線，請聯絡管理員")
+      }
+    });
   });
- });
+  // 更新收件人處理程序
+  $('input[name=gridRadios]').change(function(){
+    var addressid=$(this).val();
+    $.ajax({
+      url:'changeaddr.php',
+      type:'post',
+      dataType:'json',
+      data:{
+        addressid:addressid,
+      },
+      success:function(data){
+        if(data.c==true){
+          alert(data.m);
+          window.location.reload();
+        }else{
+          alert("伺服器傳回錯誤："+data.m)
+        }
+      },
+      error:function(data){
+        alert("ajax傳送錯誤")
+      }
+    })
+  })
+
+  //系統進行結帳處理
+  $('#btn04').click(function(){
+    let msg="系統將進行結帳處理，請確認產品金額與收件人是否正確！";
+    if(!confirm(msg)) return false;
+    $("#loading").show();
+    var addressid=$('input[name=gridRadios]:checked').val();
+    $.ajax({
+      url:'addorder.php',
+      type:'post',
+      dataType:'json',
+      data:{
+        addressid:addressid,
+      },
+      success:function(data){
+        if(data.c==true){
+          alert(data.m);
+          window.location.href="index_p01.php";
+        }else{
+          alert("資料庫回傳錯誤："+data.m);
+          $("#loading").hide();
+        }
+      },
+      error:function(data){
+        alert("ajax請求錯誤");
+        $("#loading").hide();
+      }
+    });
+  });
 </script>
 
 
-</body>
-</html>

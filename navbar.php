@@ -49,31 +49,31 @@ $SQLstring="SELECT * FROM cart WHERE orderid is NULL AND ip='".$_SERVER['REMOTE_
 $cart_rs=$link->query($SQLstring);
 ?>
 <!-- navigation main part -->
-<div class="top d-flex bg-warning"> 
-    <div class="topleft ms-auto w-60 d-flex justify-content-end" style="width: 50%;">
-    <img src="./images/assets/facebook.png" class="mx-3" alt="" style="height: 30px;"> 粉絲團 
-    <img src="images/assets/like.png" alt="" style="height: 30px;" class="mx-3">
+<div class="top d-flex bg-warning p-0 m-0"> 
+    <div class="topleft ms-auto w-60 d-flex justify-content-end p-0 m-0" style="width: 50%;">
+    <img src="./images/assets/facebook.png" class="mx-3 mt-2" alt="" style="height: 30px;"> 粉絲團 
+    <img src="images/assets/like.png" alt="" style="height: 30px;" class="mx-3 mt-2">
     </div> 
 
-    <div class="topright  d-flex justify-content-end w-40" style="width:50%;">
+    <div class="topright  d-flex justify-content-end w-40 p-0" style="width:50%;">
     <img src="" alt="">
 
     <form class="d-flex" role="search" name="search" action="products_p01.php" method="get">
 
         <!-- searching box -->
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_name" id="search_name" value="<?php echo (isset($_GET['search_name']))?$_GET['search_name']:''; ?>" required>
-        <button type="submit" class="btn p-0 border-0 bg-transparent"><i class="fa-solid fa-magnifying-glass mx-3 " style="font-size: 30px;"></i></button>
+        <input class="form-control me-2 mt-1" type="search" placeholder="Search" aria-label="Search" name="search_name" id="search_name" value="<?php echo (isset($_GET['search_name']))?$_GET['search_name']:''; ?>" required>
+        <button type="submit" class="btn p-0 border-0 bg-transparent mt-1"><i class="fa-solid fa-magnifying-glass mx-3 " style="font-size: 30px;"></i></button>
 
         <!-- member -->
          <?php if (isset($_SESSION['login'])){ ?>
-            <a class="nav-link active" href="javascript:void(0);" onclick="btn_confirmLink('是否確定登出?','logout.php')" style="font-size: 20px; font-weight:600;"><i class="fa-solid fa-right-from-bracket ms-3 mt-1" style="font-size:30px;"></i></a>
+            <a class="nav-link active" href="javascript:void(0);" onclick="btn_confirmLink('是否確定登出?','logout.php')" style="font-size: 20px; font-weight:600;"><i class="fa-solid fa-right-from-bracket ms-3 mt-2" style="font-size:30px;"></i></a>
         
         <?php } else { ?>
-            <a class="nav-link" href="./member_login.php" style="font-size: 20px; font-weight:600;"><i class="fa-solid fa-user ms-3 mt-1" style="font-size: 30px;"></i></a>
+            <a class="nav-link" href="./member_login.php" style="font-size: 20px; font-weight:600;"><i class="fa-solid fa-user ms-3 mt-2" style="font-size: 30px;"></i></a>
         <?php } ?>
         
         <!-- shopping cart -->
-        <a href="product_cart.php" class="text-decoration-none text-black position-relative"><i class="fa-solid fa-cart-shopping mx-3 mt-1" style="font-size: 30px;"><span class="badge text-bg-danger position-absolute rounded-circle" style="left:20%; top:10%; height:20px; width:20px; font-size:10px;"><?php echo($cart_rs) ?$cart_rs->rowCount() :''; ?></span></i></a>
+        <a href="product_cart.php" class="text-decoration-none text-black position-relative"><i class="fa-solid fa-cart-shopping mx-3 mt-2" style="font-size: 30px;"><span class="badge text-bg-danger position-absolute rounded-circle" style="left:20%; top:10%; height:20px; width:20px; font-size:10px;"><?php echo($cart_rs) ?$cart_rs->rowCount() :''; ?></span></i></a>
         
     </div>
 </div>
@@ -106,7 +106,7 @@ $cart_rs=$link->query($SQLstring);
            
             </a>
             <div class="dropdown-menu">
-            <a class="dropdown-item" href="member_orderlist.php">訂單列表</a>
+            <a class="dropdown-item" href="./member_orderlist.php">訂單列表</a>
             <a class="dropdown-item" href="member_profile.php">編輯個人資訊</a>
             <a class="dropdown-item" href="#" onclick="btn_confirmLink('請確認是否登出','logout.php')">登出</a>
             </div>

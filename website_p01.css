@@ -1,17 +1,21 @@
+.top {
+  height: 50px;
+  line-height: 50px;
+  align-items: center;
+}
 .wrapper {
   min-height: 100vh;
 }
 
-
-.the-one{
+.the-one {
   background-image: linear-gradient(white, orange),
     url(./images/assets/bg-banner.jpg);
   background-size: cover;
   background-position: 0 80%;
-  background-blend-mode:color-burn;
+  background-blend-mode: color-burn;
 }
-.the-two{
-  background-image:url(./images/assets/campsite.jpg) ;
+.the-two {
+  background-image: url(./images/assets/campsite.jpg);
   background-size: cover;
   background-blend-mode: normal;
 }
@@ -76,18 +80,19 @@
   box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.dropdown:hover>.dropdown-menu,.dropend:hover>.dropdown-menu{
+.dropdown:hover > .dropdown-menu,
+.dropend:hover > .dropdown-menu {
   display: block;
   margin-top: 0.125em;
   margin-left: 0.125em;
   margin-right: 80%;
 }
-.dropdown .dropdown-menu{
+.dropdown .dropdown-menu {
   display: none;
 }
-@media screen and (min-width:769px){
-  .dropend:hover>.dropdown-menu{
-    position:absolute;
+@media screen and (min-width: 769px) {
+  .dropend:hover > .dropdown-menu {
+    position: absolute;
     top: 0;
     left: 100%;
   }

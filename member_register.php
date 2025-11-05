@@ -86,12 +86,12 @@ if(isset($_POST['formct']) && $_POST['formct']=='reg'){
 
 <section id="productcontent">
   <div class="container-fluid">
-      <div class="row align-items-start g-0 d-flex flex-row">
-          <div class="col-md-3" style="height: 130vh;">
+      <div class="row align-items-start g-0 d-flex flex-row" style="height:200vh;">
+          <div class="col-md-3" >
             <!-- sidebar -->
               <?php require_once("./sidebar.php") ?>
           </div>
-          <div class="col-md-9" style="height: 130vh;">
+          <div class="col-md-9" >
             <!-- Member register form -->
             <div class="shadow-sm rounded-3 ms-3" style="background-color:rgba(255,255,255,0.8);" >
               <div class="row mt-3">

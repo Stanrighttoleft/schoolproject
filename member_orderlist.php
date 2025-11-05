@@ -1,25 +1,23 @@
 <!-- if session not start then start it -->
 <?php (!isset($_SESSION))? session_start(): ""; ?>
 <!-- import the database -->
-<?php require_once('Connections/conn_db.php');?>
-<!-- import common PHP function -->
+ <?php require_once('Connections/conn_db.php');?>
+  <!-- import common PHP function -->
 <?php require_once("php_lib.php"); ?>
-<!-- login path setting -->
 <?php
-if(isset($_GET['sPath'])){
-  $sPath=$_GET['sPath']."";
-}else{
-  $sPath="index_p01.php";
-}
-if(isset($_SESSION['login'])){
-  header(sprintf("location:%s",$sPath));
-  // for php 5.2 version
-  // echo "<script>window.location.href='".$sPath."';</script>";
-}
-
-
+//驗證帳號是否登入
+ if(!isset($_SESSION['login'])){
+  $sPath="member_login.php?sPath=member_orderlist.php";
+   header(sprintf("Location:%s",$sPath));
+ }
 ?>
-<!doctype html>
+<style>
+ .accordion-header a{
+    text-decoration: none;
+  }
+</style>
+
+
 <html lang="en">
   <!-- head setup -->
   <head>
@@ -36,7 +34,7 @@ if(isset($_SESSION['login'])){
     <link rel="stylesheet" href="./css/jquery.lightbox-0.5.css">
     
   </head>
-  <body class="position-relative" style="background-image:radial-gradient(rgba(250,200,100,0.5),rgba(255,255,255,0.8));">
+  <body class="position-relative">
   <!-- whole page absolute item -->
    <?php require_once("./page_deco.php") ?>
 
@@ -47,17 +45,16 @@ if(isset($_SESSION['login'])){
 </section>
 <section id="productcontent">
   <div class="container-fluid">
-      <div class="row align-items-start g-0 d-flex flex-row">
-          <div class="col-md-3" style="height: 100vh;">
+      <div class="row align-items-start g-0 d-flex flex-row" >
+          <div class="col-md-3" style="height: 150vh;" >
             <!-- sidebar -->
               <?php require_once("./sidebar.php") ?>
           </div>
-          <div class="col-md-9" style="height: 100vh;">
-            <!-- Member login form -->
-            <?php require_once("./member_login_content.php") ?>
-
-
-             
+          <div class="col-md-9  p-3" style="height: 150vh;">
+            <!-- orderlist content -->
+             <?php require_once('./member_orderlist_content.php'); ?>
+            
+          
           </div>
       </div>
   </div>
@@ -68,12 +65,9 @@ if(isset($_SESSION['login'])){
 require_once('./footer.php')
 ?>
 </section>
-<!-- loading page while loading -->
- <div id="loading" name="loading" style="display:none;position:fixed;width:100%;height:100%;top:0;left:0;background-color:rgba(255,255,255,0.5);z-index:10;"><i class="fas fa-spinner fa-spin fa-5x fa-fw" style="position:absolute;top:50%;left:50%;"></i></div>
-
-
       
 </div>
+
 
     
 <!--plugin section  -->
@@ -81,52 +75,15 @@ require_once('./footer.php')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="js/jquery.lightbox-0.5.js"></script>
 <script src="./js/jslib.js"></script>
-<script src="./js/commlib.js"></script>
 
 <!-- init or function section -->
-<script>
-    AOS.init();
-</script>
+
 <script>
 // chating box
 document.getElementById("chatToggle").addEventListener("click", function() {
   const panel = document.getElementById("chatPanel");
   panel.style.display = panel.style.display === "block" ? "none" : "block";
 });
-
- $(function(){
-    $("#form1").submit(function(e){
-      e.preventDefault();
-      const inputAccount=$("#inputAccount").val();
-      const inputPassword=MD5($("#inputPassword").val());
-      $("#loading").show();
-      // 利用$ajax函數呼叫後台的auth_user.php驗證帳號密碼
-      $.ajax({
-        url:'./auth_user.php',
-        type:'post',
-        dataType:'json',
-        data:{
-          inputAccount:inputAccount,
-          inputPassword:inputPassword,
-        },
-        success:function(data){
-          if(data.c==true){
-            alert(data.m);
-            $("#loading").hide();
-            // window.location.reload();
-            window.location.href="<?php echo $sPath; ?>";
-          }else{
-            alert(data.m);
-            $("#loading").hide();
-
-          }
-        },
-        error:function(data){
-          alert("系統無法連接後台資料庫");
-        }
-      });
-    });
-  });
 </script>
 
 
