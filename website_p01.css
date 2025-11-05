@@ -1,8 +1,38 @@
+.topright {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  line-height: 50px;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.topright form {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.topright * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.top .form-control {
+  height: 38px !important;
+  padding: 0 10px !important;
+  font-size: 1rem;
+  line-height: normal;
+}
 .top {
   height: 50px;
   line-height: 50px;
   align-items: center;
 }
+
+.top .btn i {
+  line-height: 38px;
+}
+
 .wrapper {
   min-height: 100vh;
 }
