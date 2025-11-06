@@ -1,5 +1,32 @@
 <!-- checkoutpage content -->
 
+<!--  運送方式查詢-->
+<?php
+  // Get the user's IP
+$ip = $_SERVER['REMOTE_ADDR'];
+// Query shipping info for this cart session
+$sql = "SELECT c.shipping_id, s.shipping_name, s.shipping_cost
+        FROM cart c
+        LEFT JOIN shipping_method s ON c.shipping_id = s.shipping_id
+        WHERE c.ip=? AND c.orderid IS NULL
+        LIMIT 1"; // assuming all items share the same shipping method
+$stmt = $link->prepare($sql);
+$stmt->execute([$ip]);
+$shipping = $stmt->fetch();
+
+// If nothing selected yet
+$shippingName = $shipping['shipping_name'] ?? '尚未選擇';
+$shippingCost = $shipping['shipping_cost'] ?? 0;
+
+?>
+
+<!-- 結帳資料查詢 -->
+<?php
+$SQLstring="SELECT * FROM cart, product, product_img WHERE ip='".$_SERVER['REMOTE_ADDR']."' AND orderid IS NULL AND cart.p_id=product_img.p_id AND cart.p_id=product.p_id AND product_img.sort=1 ORDER BY cartid DESC";
+$cart_rs=$link->query($SQLstring);
+$ptotal=0;//設定累加的變數，初始為0;
+?>
+
 <!-- 取得收件人地址資訊 -->
 <?php
 $SQLstring=sprintf("SELECT * ,city.Name AS ctName, town.Name AS toName FROM addbook,city,town WHERE emailid='%d' AND setdefault='1' AND addbook.myZip=town.Post AND town.AutoNo=city.AutoNo", $_SESSION['emailid']);
@@ -34,6 +61,14 @@ if($addbook_rs && $addbook_rs->rowCount() !=0){
         <div class="card-body">
            
             <table class="table table-striped">
+              <tr>
+                <td>配送方式</td>
+                <td><?php echo htmlspecialchars($shippingName); ?></td>
+              </tr>
+              <tr>
+                <td>運費</td>
+                <td>$<?php echo number_format($shippingCost); ?></td>
+              </tr>
               <tr>
                 <td>收件人</td>
                 <td><?php echo $cname; ?></td>
@@ -182,12 +217,7 @@ if($addbook_rs && $addbook_rs->rowCount() !=0){
         </div>
     </div>
     <!-- 產品結帳表格 -->
-    <!-- 結帳資料查詢 -->
-     <?php
-     $SQLstring="SELECT * FROM cart, product, product_img WHERE ip='".$_SERVER['REMOTE_ADDR']."' AND orderid IS NULL AND cart.p_id=product_img.p_id AND cart.p_id=product.p_id AND product_img.sort=1 ORDER BY cartid DESC";
-     $cart_rs=$link->query($SQLstring);
-     $ptotal=0;//設定累加的變數，初始為0;
-     ?>
+    
     
     <div class="table-responsive-md" style="width:100%;">
       <table class="table table-hover mt-3">
@@ -223,10 +253,10 @@ if($addbook_rs && $addbook_rs->rowCount() !=0){
                 <td colspan="7">累計：<?php echo $ptotal; ?></td>
             </tr>
             <tr>
-                <td colspan="7">運費：100</td>
+                <td colspan="7">運費：$<?php echo number_format($shippingCost); ?></td>
             </tr>
             <tr>
-                <td colspan="7" class="color_red">總計：<?php echo $ptotal+100; ?></td>
+                <td colspan="7" class="color_red">總計：<?php echo $ptotal+$shippingCost; ?></td>
             </tr>
             <tr>
                 <td colspan="7"><button id="btn04" name="btn04" class="btn btn-danger mr-2"><i class="fas fa-cart-arrow-down pr-2"></i>確認結帳</button>

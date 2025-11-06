@@ -7,7 +7,7 @@
  }
  $startRow_rs=$pageNum_rs * $maxRows_rs;
 //  列出uorder資料表查詢
-$queryFirst=sprintf("SELECT uorder.orderid,uorder.create_date as orderTime,uorder.remark,ms1.msname as howpay,ms2.msname as status, addbook.* FROM uorder,addbook,multiselect as ms1,multiselect as ms2 WHERE ms2.msid=uorder.status AND ms1.msid=uorder.howpay AND uorder.emailid='%d' AND uorder.addressid=addbook.addressid ORDER BY uorder.create_date DESC", $_SESSION['emailid']);
+$queryFirst=sprintf("SELECT uorder.orderid,uorder.create_date as orderTime,uorder.remark,ms1.msname as howpay,ms2.msname as status, addbook.*, shipping_method.shipping_name FROM uorder,addbook,multiselect as ms1,multiselect as ms2, shipping_method WHERE ms2.msid=uorder.status AND ms1.msid=uorder.howpay AND shipping_method.shipping_id=uorder.shipping_id AND uorder.emailid='%d' AND uorder.addressid=addbook.addressid ORDER BY uorder.create_date DESC", $_SESSION['emailid']);
 $query=sprintf("%s LIMIT %d, %d", $queryFirst, $startRow_rs,$maxRows_rs);
 $order_rs=$link->query($query);
 $i=21; //控制第一筆訂單開啟
@@ -37,7 +37,7 @@ $i=21; //控制第一筆訂單開啟
                 <td width="15%">訂單狀態</td>
                 <td width="10%">收件人</td>
                 <td width="20%">地址</td>
-                <td width="10%">備註說明</td>
+                <td width="10%">運送方式</td>
               </tr>
             </thead>
             <tbody>
@@ -48,7 +48,7 @@ $i=21; //控制第一筆訂單開啟
                 <td><?php echo $data01['status']; ?></td>
                 <td><?php echo $data01['cname']; ?></td>
                 <td><?php echo $data01['address']; ?></td>
-                <td><?php echo $data01['remark']; ?></td>
+                <td><?php echo $data01['shipping_name']; ?></td>
               </tr>
             </tbody>
           </table>

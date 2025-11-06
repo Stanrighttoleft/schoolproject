@@ -1,0 +1,27 @@
+CREATE TABLE shipping_method (
+  shipping_id INT AUTO_INCREMENT PRIMARY KEY,
+  shipping_name VARCHAR(50) NOT NULL,
+  shipping_cost DECIMAL(8,2) NOT NULL,
+  shipping_desc VARCHAR(255),
+  status TINYINT(1) DEFAULT 1
+);
+
+example data:
+
+INSERT INTO shipping_method (shipping_name, shipping_cost, shipping_desc)
+VALUES
+('宅配', 100, '一般宅配服務，約2-3天到貨'),
+('超商取貨', 60, '7-11、全家、萊爾富取貨'),
+('黑貓冷藏配送', 150, '生鮮食品適用');
+
+還建立了uorder cart裡面的shipping_id
+
+ALTER TABLE cart
+ADD COLUMN shipping_id INT DEFAULT NULL,
+ADD CONSTRAINT fk_cart_shipping FOREIGN KEY (shipping_id)
+REFERENCES shipping_method(shipping_id);
+
+ALTER TABLE uorder 
+ADD COLUMN shipping_id INT,
+ADD CONSTRAINT fk_shipping_method FOREIGN KEY (shipping_id)
+REFERENCES shipping_method(shipping_id);

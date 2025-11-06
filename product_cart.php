@@ -154,7 +154,50 @@ $(".cartQty").change(function(){
       showToast("無法建立連線，請聯絡管理人員",'danger')
     }
   });
+  
 });
+// 負責改變運送方式
+$(document).ready(function(){
+    const subtotal = <?php echo $ptotal; ?>;
+
+    $("#shippingSelect").on("change", function(){
+        const shipCost = parseFloat($(this).find(":selected").data("cost")) || 0;
+
+        // Update the shipping and grand total
+        $("#shippingCost").text(shipCost);
+        $("#grandTotal").text(subtotal + shipCost);
+
+        // Optional: save shipping selection in database
+        const shippingId = $(this).val();
+        if(shippingId){
+            $.ajax({
+                url: "update_shipping.php",
+                type: "POST",
+                dataType: "json",
+                data: { shipping_id: shippingId },
+                success: function(data){
+                    if(data.success){
+                        showToast("已更新運送方式：" + data.name, "success");
+                    } else {
+                        showToast("更新失敗：" + data.message, "warning");
+                    }
+                },
+                error: function(){
+                    showToast("無法更新運送方式", "danger");
+                }
+            });
+        }
+    });
+});
+// make sure user pick up shipping method
+function goCheckout(){
+  const shippingId = $("#shippingSelect").val();
+  if(!shippingId){
+    showToast("請先選擇運送方式！", "warning");
+    return false;
+  }
+  window.location.href = "product_checkout.php";
+}
 </script>
 
 

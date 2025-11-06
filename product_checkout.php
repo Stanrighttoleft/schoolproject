@@ -342,12 +342,14 @@ $(function(){
     if(!confirm(msg)) return false;
     $("#loading").show();
     var addressid=$('input[name=gridRadios]:checked').val();
+    var shippingid = <?php echo $shipping['shipping_id'] ?? 0; ?>;
     $.ajax({
       url:'addorder.php',
       type:'post',
       dataType:'json',
       data:{
         addressid:addressid,
+        shippingid:shippingid
       },
       success:function(data){
         if(data.c==true){
