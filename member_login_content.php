@@ -11,7 +11,8 @@
     </form>
     </div>
     <div class="other mt-5 text-center">
-      <a href="member_register.php">加入會員</a><a class="ms-5" href="">忘記密碼?</a>
+      <a href="member_register.php">加入會員</a>
+      <a class="ms-5" href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">忘記密碼?</a>
     </div>
   </div>
 </div>

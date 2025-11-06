@@ -70,11 +70,33 @@ require_once('./footer.php')
 </section>
 <!-- loading page while loading -->
  <div id="loading" name="loading" style="display:none;position:fixed;width:100%;height:100%;top:0;left:0;background-color:rgba(255,255,255,0.5);z-index:10;"><i class="fas fa-spinner fa-spin fa-5x fa-fw" style="position:absolute;top:50%;left:50%;"></i></div>
-
-
-      
+     
 </div>
+<!-- forgot password modal -->
 
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="forgotPasswordForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="forgotPasswordLabel">密碼重設</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="forgotEmail" class="form-label">請輸入你註冊的會員信箱：</label>
+            <input type="email" class="form-control" id="forgotEmail" name="email" required>
+          </div>
+          <div id="forgotMsg" class="text-danger"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">送出重設郵件</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
     
 <!--plugin section  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -126,7 +148,35 @@ document.getElementById("chatToggle").addEventListener("click", function() {
         }
       });
     });
+    
+    // forgot password form
+     $("#forgotPasswordForm").submit(function(e){
+    e.preventDefault();
+    const email = $("#forgotEmail").val();
+    $("#loading").show();
+    $.ajax({
+      url:'forgot_password_send.php',
+      type:'post',
+      dataType:'json',
+      data:{ email: email },
+      success:function(data){
+        $("#loading").hide();
+        $("#forgotMsg").removeClass('text-danger text-success');
+        $("#forgotMsg").addClass(data.success ? 'text-success' : 'text-danger');
+        $("#forgotMsg").text(data.message);
+        if(data.success) $("#forgotPasswordForm")[0].reset();
+      },
+      error:function(){
+        $("#loading").hide();
+        $("#forgotMsg").removeClass('text-success').addClass('text-danger').text('Server error, try again.');
+      }
+    });
   });
+
+  });
+
+  
+  
 </script>
 
 

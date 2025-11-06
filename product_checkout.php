@@ -49,16 +49,15 @@ if(!isset($_SESSION['login'])){
 <section id="productcontent">
   <div class="container-fluid">
       <div class="row align-items-start g-0 d-flex flex-row" style="height:150vh;">
-          <div class="col-md-3" >
-            <!-- sidebar -->
-              <?php require_once("./sidebar.php") ?>
-          </div>
-          <div class="col-md-9 ps-4 my-3">
+        <div class="col-md-3" >
+          <!-- sidebar -->
+          <?php require_once("./sidebar.php") ?>
+        </div>
+          
+        <div class="col-md-9 ps-4 my-3">
             <!-- checkout content not including modal -->
              <?php require_once('./product_checkout_content.php') ?>
-            
-             
-          </div>
+        </div>
       </div>
   </div>
 </section>
@@ -149,6 +148,7 @@ $addbook_rs=$link->query($SQLstring);
         <td><?php echo $data['cname']; ?></td>
         <td><?php echo $data['mobile']; ?></td>
         <td><?php echo $data['myZip'].$data['ctName'].$data['toName'].$data['address']; ?></td>
+
     </tr>
     <?php }?>
     

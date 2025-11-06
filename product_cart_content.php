@@ -5,7 +5,7 @@
     $ptotal=0; //設定累加變數初始為0
     ?>
     <!-- cart detail content -->
-    <h3 class="mb-3">購物車，你點選的東西都在這裡：</h3>
+    <h3 class="mb-3 fw-semibold">購物車，你點選的東西都在這裡：</h3>
 <?php if($cart_rs->rowCount()!=0) { ?>
     <a id="btn01" class="btn btn-primary" href="./products_p01.php" >繼續購物</a>
     <button id="btn02" name="btn02" class="btn btn-secondary" onclick="window.history.go(-1)" >回上一頁</button>
@@ -31,7 +31,7 @@
             <td><a href="./product_detail.php?p_id=<?php echo $cart_data['p_id']; ?>"><img src="./images/products/big/<?php echo $cart_data['img_file']; ?>" alt="<?php echo $cart_data['p_name']; ?>" class="img-fluid" ></a></td>
             <td><a href="./product_detail.php?p_id=<?php echo $cart_data['p_id']; ?>" class="text-decoration-none text-black"><?php echo $cart_data['p_name']; ?></a></td>
             <td>
-            <h4 class="text-danger"></h4>
+            <h5 class="text-danger">$<?php echo $cart_data['p_price'] ?></h5>
             </td>
             <td style="min-width:100px;">
             <div class="input-group">
@@ -44,6 +44,17 @@
         <?php $ptotal+=$cart_data['p_price']*$cart_data['qty']; } ?>
         </tbody>
         <tfoot>
+        <tr>
+            <td colspan="7">
+                運送方式：
+                <div class="input-group my-3">
+                    <label for="" class="form-label"></label>
+                    <select name="" id="" class="form-control">
+                        <option value="">請選擇運送方式</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
         <tr>
             <td colspan="7">累計：<?php echo $ptotal; ?></td>
         </tr>

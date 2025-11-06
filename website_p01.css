@@ -49,6 +49,14 @@
   background-size: cover;
   background-blend-mode: normal;
 }
+.the-three{
+  background-image:
+  url(./images/assets/unichibearbanner.webp),radial-gradient(circle at center,#ffe0f0, #ffffff) ;
+  background-size: contain,cover;
+  background-repeat: no-repeat;
+  background-position: center, center;
+  background-blend-mode: normal;
+}
 .scrollwrapper {
   overflow-x: auto;
   overflow-y: hidden;
