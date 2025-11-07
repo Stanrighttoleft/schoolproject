@@ -1,11 +1,3 @@
-<style>
-    .dropdown-toggle.member::after{
-        position: relative;
-        top: -3px;
-    }
-</style>
-
-<!-- php function multiList01 for the navbar -->
 <?php
     function multiList01(){
     global $link;
@@ -135,4 +127,10 @@ $cart_rs=$link->query($SQLstring);
       
     </div>
     </div>
-</nav>      
+</nav>  
+<style>
+    .dropdown-toggle.member::after{
+        position: relative;
+        top: -3px;
+    }
+</style>

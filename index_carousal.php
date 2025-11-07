@@ -1,4 +1,3 @@
- <!--  carousel -->
 <div id="carouselBanner" class="carousel slide h-100 carousel-fade" data-bs-ride="carousel">
   <div class="carousel-inner h-100 the-one">
     <div class="carousel-item active position-relative h-100">

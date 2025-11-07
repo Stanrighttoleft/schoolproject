@@ -1,4 +1,3 @@
-<!-- Product detail main content -->
 <div class="card mb-3 ms-3 mt-3" >
     <div class="row g-0">
     <div class="col-md-5">

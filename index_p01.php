@@ -1,4 +1,3 @@
-<!-- if session not start then start it -->
 <?php (!isset($_SESSION))? session_start(): ""; ?>
 <!-- import the database -->
  <?php require_once('Connections/conn_db.php');?>

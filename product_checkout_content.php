@@ -1,6 +1,3 @@
-<!-- checkoutpage content -->
-
-<!--  運送方式查詢-->
 <?php
   // Get the user's IP
 $ip = $_SERVER['REMOTE_ADDR'];

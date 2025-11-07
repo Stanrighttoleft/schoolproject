@@ -1,5 +1,4 @@
-    <!-- query the content for shopping cart -->
-    <?php
+<?php
     $SQLstring="SELECT * FROM cart, product, product_img WHERE ip='".$_SERVER['REMOTE_ADDR']."' AND orderid IS NULL AND cart.p_id=product_img.p_id AND cart.p_id=product.p_id AND product_img.sort=1 ORDER BY  cartid DESC";
     $cart_rs=$link->query($SQLstring);
     $ptotal=0; //設定累加變數初始為0

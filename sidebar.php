@@ -1,4 +1,3 @@
-<!-- Accordion item  -->
 <?php
 //列出產品第一層,取得資料庫資料並存在pyclass01
 $SQLstring="SELECT * FROM pyclass WHERE level=1 ORDER BY sort";
